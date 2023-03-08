@@ -3,5 +3,7 @@ IN[a]: Questao.objects.all()
 OUT[a]: <QuerySet [<Questao: Entao sempre nos decidimos a fazer uma festa no fim do ano?>, <Questao: Gostas de programar para a internet?>, <Questao: Gostas de
 estudar no ISCTE?>]>
 
-IN[b]:
+IN[b]: q = Questao.objects.filter(questao_texto__startswith='Gostas de programar')
+    #esta merda n atribui...
+
 OUT[b]:
