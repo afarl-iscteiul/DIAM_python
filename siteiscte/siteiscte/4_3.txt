@@ -1,0 +1,7 @@
+A)
+IN[a]: Questao.objects.all()
+OUT[a]: <QuerySet [<Questao: Entao sempre nos decidimos a fazer uma festa no fim do ano?>, <Questao: Gostas de programar para a internet?>, <Questao: Gostas de
+estudar no ISCTE?>]>
+
+IN[b]:
+OUT[b]:
