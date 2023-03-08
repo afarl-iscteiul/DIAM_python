@@ -1,0 +1,26 @@
+ a) Obtenha no output a lista de todas as questões em BD.
+
+In [(a)]: Questao.objects.all()
+Out[(a)]: <QuerySet [<Questao: Entao sempre nos decidimos a fazer uma festa no fim do ano?>, <Questao: Gostas de programar para a internet?>]>
+
+b) Obtenha no output a lista de todas as opções da questão em que o texto começa com “Gostas de
+programar”.
+
+In [(b)]: Questao.objects.filter(questao_texto__startswith='Gostas de programar')
+Out[(b)]: <QuerySet [<Questao: Gostas de programar para a internet?>]>
+
+
+c) Obtenha no output a lista das opções com número de votos superior a 2 da questão em que o texto
+começa com “Gostas de programar”.
+
+In [(c)]: q = Questao.objects.get(questao_texto__startswith='Gostas de programar')
+In [(c)]: q.opcao_set.filter(votos__gt=2)
+Out[(c)]: <QuerySet [<Opcao: Gosto>, <Opcao: Mais ou menos>]>
+
+
+d) Obtenha no output a lista de todas as questões publicadas nos últimos 3 anos.
+
+In [(d)]: import datetime
+In [(d)]: q = Questao(questao_texto="Quão gostas de sandes de torresmos?", pub_data=datetime.datetime(2020, 5, 7, 11, 57, 37, 649060))
+In [(d)]: q.save()
+Out[(d)]:

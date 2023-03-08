@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from django.urls import path, include
 from . import views
 
@@ -17,3 +18,11 @@ urlpatterns = [
     path('<int:questao_id>/criaropcao/', views.criaropcao, name='criaropcao'),
 ]
 
+=======
+from django.urls import include, path
+from . import views
+# (. significa que importa views da mesma directoria)
+
+
+urlpatterns = [ path("", views.index, name="index"),]
+>>>>>>> 80395ec (Exerc 4)
