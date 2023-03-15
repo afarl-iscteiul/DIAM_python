@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        label{
+            font-size: 120%;
+        }
+    </style>
+</head>
+<body>
+<br/>
+<form action="{% url 'votacao:criarquestao' %}" method="post">
+    {% csrf_token %}
+    <label for="questao_texto">Texto da nova Questão:</label>
+    <input type="text" name="questao_texto"><br><br>
+    <input type="submit" value="Gravar nova Questão">
+</form>
+<br/>
+<input type=button value="Voltar" onClick="javascript:history.go(-1);">
+
+</body>
+</html>

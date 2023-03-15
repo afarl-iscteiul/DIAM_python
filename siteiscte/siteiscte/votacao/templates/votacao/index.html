@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    {% if latest_question_list %}
+    <ul>
+        {% for questao in latest_question_list %}
+        <li>
+            <a href="{% url 'votacao:detalhe' questao.id %}">
+                {{ questao.questao_texto }}
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'votacao:criarquestao' %}">Criar Questão</a>
+    {% else %}
+    <p>Nao ha questoes disponiveis.</p>
+    {% endif %}
+</head>
+<body>
+
+</body>
+</html>

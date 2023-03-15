@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+
+</head>
+<body>
+ <h1>{{ questao.questao_texto }}</h1>
+  <ul>
+    {% for opcao in questao.opcao_set.all %}
+    <li>{{ opcao.opcao_texto }} -- {{ opcao.votos }} voto{{ opcao.votos|pluralize }}</li>
+    {% endfor %}
+  </ul>
+  <a href="{% url 'votacao:detalhe' questao.id %}">Votar novamente?</a>
+<br>
+<input type=button value="Voltar" onClick="javascript:history.go(-1);">
+</body>
+</html>

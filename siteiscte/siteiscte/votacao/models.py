@@ -1,5 +1,3 @@
-
-
 from django.db import models
 from django.utils import timezone
 from six import string_types
@@ -24,4 +22,3 @@ class Opcao(models.Model):
 
     def __str__(self):
         return self.opcao_texto
-
