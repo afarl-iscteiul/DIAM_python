@@ -3,8 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        form {
+            display: table
+        }
+
+        p {
+            display: table-row
+        }
+
+        label {
+            display: table-cell;
+        }
+
+        input {
+            display: table-cell;
+        }
+    </style>
 </head>
 <body>
+<form>
+    <p>
+        <label for="username"> Username:</label>
+        <input type="text" id="username" name="username">
+    </p>
+    <p>
+        <label for="email"> E-mail:</label>
+        <input type="text" id="email" name="email">
+    </p>
+    <p>
+        <label for="password"> Password:</label>
+        <input type="password" id="password" name="password">
+    </p>
 
+    <p>
+        <label for="curso">Curso:</label>
+        <select id="curso" name="curso">
+            <option value="antropologia">Antropologia</option>
+            <option value="arquitetura">Arquitetura</option>
+            <option value="ciencia-dados">Ciência de Dados</option>
+            <option value="ciencia-politica">Ciência Política</option>
+            <option value="eng-informatica">Engenharia Informática</option>
+        </select>
+    </p>
+
+</form>
 </body>
 </html>

@@ -22,3 +22,7 @@ class Opcao(models.Model):
 
     def __str__(self):
         return self.opcao_texto
+
+class User(models.Model):
+    username = models.CharField(max_length=12)
+    password = models.

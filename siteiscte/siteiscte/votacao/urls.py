@@ -1,7 +1,6 @@
-<<<<<<< HEAD
+
 from django.urls import path, include
 from . import views
-
 from django.contrib import admin
 
 app_name = 'votacao'
@@ -17,12 +16,3 @@ urlpatterns = [
     path('criarquestao/', views.criarquestao, name='criarquestao'),
     path('<int:questao_id>/criaropcao/', views.criaropcao, name='criaropcao'),
 ]
-
-=======
-from django.urls import include, path
-from . import views
-# (. significa que importa views da mesma directoria)
-
-
-urlpatterns = [ path("", views.index, name="index"),]
->>>>>>> 80395ec (Exerc 4)

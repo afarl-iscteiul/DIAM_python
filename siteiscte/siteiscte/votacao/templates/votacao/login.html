@@ -3,8 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+       form{
+           margin: 0 auto;
+           position: absolute;
+           top:50%;
+           left:50%;
+           transform: translate(-50%,-50%);
+       }
+    </style>
 </head>
 <body>
+<br/>
+<form align="center" action="action_page.php" method="post">
+  <div class="container" >
+    <label for="username"><b>Username</b></label>
+    <input type="text" placeholder="Enter Username" name="username" required>
+    <br/>
+    <br/>
+    <label for="psw"><b>Password</b></label>
+    <input type="password" placeholder="Enter Password" name="psw" required>
+    <br/>
+    <br/>
+    <button type="submit">Login</button>
+  </div>
+    <br/>
+  <div class="container" >
+    <span class="psw">Recuperar <a href="#">password</a>?</span>
+    <br/>
+    <a href="registo.html">Registar</a>
+  </div>
+</form>
 
 </body>
 </html>

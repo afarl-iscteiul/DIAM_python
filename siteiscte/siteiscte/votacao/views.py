@@ -5,6 +5,7 @@ from django.http import HttpResponse, Http404, HttpResponseRedirect
 from .models import Questao, Opcao
 from django.template import loader
 from django.urls import reverse
+from django.contrib.auth import authenticate, login
 
 
 def index(request):
@@ -62,3 +63,21 @@ def criaropcao(request, questao_id):
         return HttpResponseRedirect(reverse('votacao:detalhe', args=(questao.id,)))
     else:
         return render(request, 'votacao/criaropcao.html', {'questao': questao})
+
+def login(request):
+    username = request.POST['username']
+    password = request.POST['password']
+    user = authenticate(username=username,password=password)
+    if user is not None:
+        login(request,user)
+        #direcionar pagina sucesso
+    else:
+        #manter na pagina inicial
+
+def logout(request):
+    logout(request)
+    #direcionar pag sucesso
+
+def umaview(request):
+    if not request.user.is_authenticated:
+        return render(request,'votacao/login_error.html')
