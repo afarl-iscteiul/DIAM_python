@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
 from six import string_types
@@ -23,6 +24,7 @@ class Opcao(models.Model):
     def __str__(self):
         return self.opcao_texto
 
-class User(models.Model):
-    username = models.CharField(max_length=12)
-    password = models.
+
+class Aluno(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    curso = models.CharField(max_length=100)

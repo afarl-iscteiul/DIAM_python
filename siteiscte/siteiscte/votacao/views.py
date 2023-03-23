@@ -2,11 +2,11 @@ import datetime
 
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, Http404, HttpResponseRedirect
-from .models import Questao, Opcao
+from .models import Questao, Opcao, Aluno
 from django.template import loader
 from django.urls import reverse
 from django.contrib.auth import authenticate, login
-
+from django.contrib.auth.models import User
 
 def index(request):
     latest_question_list = Questao.objects.order_by('-pub_data')[:5]
@@ -53,6 +53,21 @@ def criarquestao(request):
         return render(request, 'votacao/criarquestao.html')
 
 
+def registo(request):
+    if request.method == 'POST':
+        username = request.POST.get("username")
+        email = request.POST.get("email")
+        password = request.POST.get("password")
+        curso = request.POST.get("curso")
+        user = User.objects.create_user(username,email,password)
+        # user.save()
+        novouser = Aluno(user=user, curso=curso)
+        novouser.user.username
+        return HttpResponseRedirect(reverse('votacao:index'))
+    else:
+        return render(request, 'votacao/registo.html')
+
+
 def criaropcao(request, questao_id):
     questao = get_object_or_404(Questao, pk=questao_id)
     if request.method == 'POST':
@@ -70,9 +85,9 @@ def login(request):
     user = authenticate(username=username,password=password)
     if user is not None:
         login(request,user)
-        #direcionar pagina sucesso
+        return HttpResponseRedirect(reverse('votacao:index'))
     else:
-        #manter na pagina inicial
+        return render(request, 'votacao/login_error.html')
 
 def logout(request):
     logout(request)

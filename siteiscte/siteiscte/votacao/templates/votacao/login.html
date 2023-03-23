@@ -15,7 +15,7 @@
 </head>
 <body>
 <br/>
-<form align="center" action="action_page.php" method="post">
+<form align="center" action="{% url 'votacao:login' %}" method="post">
   <div class="container" >
     <label for="username"><b>Username</b></label>
     <input type="text" placeholder="Enter Username" name="username" required>

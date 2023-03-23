@@ -22,7 +22,8 @@
     </style>
 </head>
 <body>
-<form>
+<form action="{% url 'votacao:registo' %}" method="post">
+    {% csrf_token %}
     <p>
         <label for="username"> Username:</label>
         <input type="text" id="username" name="username">
@@ -46,6 +47,10 @@
             <option value="eng-informatica">Engenharia Informática</option>
         </select>
     </p>
+    <p>
+        <button type="submit">Registar</button>
+    </p>
+
 
 </form>
 </body>
