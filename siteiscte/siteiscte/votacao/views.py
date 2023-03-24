@@ -63,6 +63,7 @@ def registo(request):
         # user.save()
         novouser = Aluno(user=user, curso=curso)
         novouser.user.username
+        novouser.save()
         return HttpResponseRedirect(reverse('votacao:index'))
     else:
         return render(request, 'votacao/registo.html')
