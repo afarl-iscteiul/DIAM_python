@@ -94,6 +94,7 @@ def criaropcao(request, questao_id):
         return render(request, 'votacao/criaropcao.html', {'questao': questao})
 
 
+
 def eliminaropcao(request, questao_id):
     questao = get_object_or_404(Questao, pk=questao_id)
     if request.method == 'POST':
@@ -114,6 +115,9 @@ def autenticar(request):
         if user is not None:
             login(request, user)
             return HttpResponseRedirect(reverse('votacao:index'))
+        else:
+            error_message = "Username ou passwords incorretos!"
+            return render(request, 'votacao/login.html', {'error_message': error_message})
     else:
         return render(request, 'votacao/login.html')
 

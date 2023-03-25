@@ -13,7 +13,6 @@ urlpatterns = [
     # ex: votacao/5/voto
     path('<int:questao_id>/voto', views.voto, name='voto'),
 
-
     path('criarquestao/', views.criarquestao, name='criarquestao'),
     path('eliminarquestao/', views.eliminarquestao, name='eliminarquestao'),
 

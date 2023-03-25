@@ -11,12 +11,18 @@
             left: 50%;
             transform: translate(-50%, -50%);
         }
+        .erro{
+            color:red;
+        }
     </style>
 </head>
 <body>
 <br/>
 <form align="center" action="{% url 'votacao:autenticar' %}" method="post">
     {% csrf_token %}
+    {% if error_message %}
+    <p class="erro">{{ error_message }}</p>
+{% endif %}
     <div class="container">
         <label for="username"><b>Username</b></label>
         <input type="text" placeholder="Enter Username" name="username" required>
