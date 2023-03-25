@@ -1,7 +1,10 @@
 import datetime
 
+
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, Http404, HttpResponseRedirect
+from django.utils import timezone
+
 from .models import Questao, Opcao, Aluno
 from django.template import loader
 from django.urls import reverse
@@ -32,7 +35,6 @@ def voto(request, questao_id):
     try:
         opcao_seleccionada = questao.opcao_set.get(pk=request.POST['opcao'])
     except (KeyError, Opcao.DoesNotExist):
-        # Apresenta de novo o form para votar
         return render(request, 'votacao/detalhe.html',
                       {'questao': questao, 'error_message': "Não escolheu uma opção", })
     else:
@@ -49,10 +51,16 @@ def voto(request, questao_id):
 
 def criarquestao(request):
     if request.method == 'POST':
-        questao_texto = request.POST.get("questao_texto")
-        questao = Questao(questao_texto=questao_texto, pub_data=datetime.datetime.now())
-        questao.save()
-        return HttpResponseRedirect(reverse('votacao:index'))
+        try:
+            questao_texto = request.POST.get("questao_texto")
+        except KeyError:
+            return render(request, 'votacao/criarquestao.html')
+        if questao_texto:
+            questao = Questao(questao_texto=questao_texto, pub_data=timezone.now())
+            questao.save()
+            return HttpResponseRedirect(reverse('votacao:detalhe', args=(questao.id,)))
+        else:
+            return HttpResponseRedirect(reverse('votacao:criarquestao'))
     else:
         return render(request, 'votacao/criarquestao.html')
 
@@ -60,11 +68,16 @@ def criarquestao(request):
 def eliminarquestao(request):
     questoes = Questao.objects.all()
     if request.method == 'POST':
-        questao_id = request.POST.get("questao_id")
-        questao_selecionada = Questao.objects.get(id=questao_id)
-        questao_selecionada.delete()
-
-        return HttpResponseRedirect(reverse('votacao:index'))
+        try:
+            questao_id = request.POST.get("questao_id")
+        except KeyError:
+            return render(request, 'votacao/eliminarquestao.html')
+        if questao_id:
+            questao_selecionada = Questao.objects.get(id=questao_id)
+            questao_selecionada.delete()
+            return HttpResponseRedirect(reverse('votacao:index'))
+        else:
+            return HttpResponseRedirect(reverse('votacao:eliminarquestao'))
     else:
         return render(request, 'votacao/eliminarquestao.html', {'questoes': questoes})
 
@@ -127,7 +140,6 @@ def autenticar(request):
 def logoutview(request):
     logout(request)
     return render(request, 'votacao/index.html')
-
 
 def loginerror(request):
     if not request.user.is_authenticated:
