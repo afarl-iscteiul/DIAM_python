@@ -101,11 +101,17 @@ def registo(request):
 def criaropcao(request, questao_id):
     questao = get_object_or_404(Questao, pk=questao_id)
     if request.method == 'POST':
-        opcao_texto = request.POST.get("opcao_texto")
-        votos = 0
-        opcao = Opcao(questao=questao, opcao_texto=opcao_texto, votos=votos)
-        opcao.save()
-        return HttpResponseRedirect(reverse('votacao:detalhe', args=(questao.id,)))
+        try:
+            opcao_texto = request.POST.get("opcao_texto")
+        except KeyError:
+            return render(request, 'votacao/criaropcao.html')
+        if opcao_texto:
+            votos = 0
+            opcao = Opcao(questao=questao, opcao_texto=opcao_texto, votos=votos)
+            opcao.save()
+            return HttpResponseRedirect(reverse('votacao:detalhe', args=(questao.id,)))
+        else:
+            return HttpResponseRedirect(reverse('votacao:criaropcao'))
     else:
         return render(request, 'votacao/criaropcao.html', {'questao': questao})
 
@@ -113,11 +119,16 @@ def criaropcao(request, questao_id):
 def eliminaropcao(request, questao_id):
     questao = get_object_or_404(Questao, pk=questao_id)
     if request.method == 'POST':
-        opcao_seleccionada = request.POST.get("opcao_id")
-        # opcao_apagar = get_object_or_404(Opcao, id=opcao_seleccionada)
-        opcao_apagar = questao.opcao_set.get(pk=opcao_seleccionada)
-        opcao_apagar.delete()
-        return HttpResponseRedirect(reverse('votacao:detalhe', args=(questao.id,)))
+        try:
+            opcao_seleccionada = request.POST.get("opcao_id")
+        except KeyError:
+            return render(request, 'votacao/apagaropcao.html')
+        if opcao_seleccionada:
+            opcao_apagar = questao.opcao_set.get(pk=opcao_seleccionada)
+            opcao_apagar.delete()
+            return HttpResponseRedirect(reverse('votacao:detalhe', args=(questao.id,)))
+        else:
+            return HttpResponseRedirect(reverse('votacao:apagaropcao'))
     else:
         return render(request, 'votacao/apagaropcao.html', {'questao': questao})
 
