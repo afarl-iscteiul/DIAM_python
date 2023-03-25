@@ -18,5 +18,6 @@ urlpatterns = [
     path('<int:questao_id>/criaropcao/', views.criaropcao, name='criaropcao'),
 
     path('registo/', views.registo, name='registo'),
+
     path('', views.autenticar, name='autenticar'),
 ]
