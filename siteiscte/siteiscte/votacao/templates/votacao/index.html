@@ -13,13 +13,15 @@
         </li>
         {% endfor %}
     </ul>
-    <a href="{% url 'votacao:criarquestao' %}">Criar Questão</a>
     {% else %}
     <p>Nao ha questoes disponiveis.</p>
     {% endif %}
 
     {% if user.is_superuser %}
-    <p><a href="{% url 'votacao:eliminarquestao' %}">Eliminar Questão</a></p>
+    <div>
+        <a href="{% url 'votacao:criarquestao' %}">Criar Questão</a><br>
+        <a href="{% url 'votacao:eliminarquestao' %}">Eliminar Questão</a>
+    </div>
     {% endif %}
 </head>
 <body>

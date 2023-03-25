@@ -21,16 +21,13 @@
     <input type="submit" value="Voto"/>
 </form>
 <br/>
-
-<a href="{% url 'votacao:criaropcao' questao.id%}">
-    <button type="button">Criar nova Opção</button>
-</a><br/>
-<a href="{% url 'votacao:eliminaropcao' questao.id%}">
-    <button type="button">Apagar Opçao</button>
-</a>
+{% if user.is_superuser %}
+<div>
+    <a href="{% url 'votacao:criaropcao' questao.id%}"> Criar opção</a><br>
+    <a href="{% url 'votacao:eliminaropcao' questao.id%}"> Apagar opção</a>
+</div>
+{% endif %}
 <br/>
-<br/>
-
 <input type=button value="Voltar" onClick="javascript:history.go(-1);">
 </body>
 </html>
