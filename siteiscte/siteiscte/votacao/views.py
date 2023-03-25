@@ -5,11 +5,12 @@ from django.http import HttpResponse, Http404, HttpResponseRedirect
 from .models import Questao, Opcao, Aluno
 from django.template import loader
 from django.urls import reverse
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 
 
 def index(request):
+    # loginerror(request)
     latest_question_list = Questao.objects.order_by('-pub_data')[:5]
     context = {'latest_question_list': latest_question_list}
     return render(request, 'votacao/index.html', context)
@@ -27,21 +28,21 @@ def resultados(request, questao_id):
 
 def voto(request, questao_id):
     questao = get_object_or_404(Questao, pk=questao_id)
+    aluno = Aluno.objects.get(user_id=request.user.id)
     try:
         opcao_seleccionada = questao.opcao_set.get(pk=request.POST['opcao'])
     except (KeyError, Opcao.DoesNotExist):
         # Apresenta de novo o form para votar
-        return render(request, 'votacao/detalhe.html',
-                      {'questao': questao, 'error_message': "Não escolheu uma opção", })
+        return render(request, 'votacao/detalhe.html', {'questao': questao, 'error_message': "Não escolheu uma opção", })
     else:
-        opcao_seleccionada.votos += 1
-        opcao_seleccionada.save()
-        # Retorne sempre HttpResponseRedirect depois de
-        # tratar os dados POST de um form
-        # pois isso impede os dados de serem tratados
-        # repetidamente se o utilizador
-        # voltar para a página web anterior.
-        return HttpResponseRedirect(reverse('votacao:resultados', args=(questao.id,)))
+        if aluno.votos > 0:
+            aluno.votos -= 1
+            aluno.save()
+            opcao_seleccionada.votos += 1
+            opcao_seleccionada.save()
+            return HttpResponseRedirect(reverse('votacao:resultados', args=(questao.id,)))
+        else:
+            return render(request, 'votacao/detalhe.html',  {'questao': questao, 'error_message': "Não tem votos suficientes", })
 
 
 def criarquestao(request):
@@ -122,11 +123,9 @@ def autenticar(request):
         return render(request, 'votacao/login.html')
 
 
-def logout(request):
+def logoutview(request):
     logout(request)
-    # direcionar pag sucesso
-    # ...
-
+    return render(request, 'votacao/index.html')
 
 def loginerror(request):
     if not request.user.is_authenticated:

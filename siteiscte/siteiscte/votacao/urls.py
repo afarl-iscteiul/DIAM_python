@@ -19,7 +19,11 @@ urlpatterns = [
     path('<int:questao_id>/criaropcao/', views.criaropcao, name='criaropcao'),
     path('<int:questao_id>/eliminaropcao/', views.eliminaropcao, name='eliminaropcao'),
 
+    path("logout/", views.logoutview, name='logout'),
+
     path('registo/', views.registo, name='registo'),
+
+    path('loginerror/',views.loginerror, name='loginerror'),
 
     path('', views.autenticar, name='autenticar'),
 ]

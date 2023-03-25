@@ -3,28 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    {% if latest_question_list %}
-    <ul>
-        {% for questao in latest_question_list %}
-        <li>
-            <a href="{% url 'votacao:detalhe' questao.id %}">
-                {{ questao.questao_texto }}
-            </a>
-        </li>
-        {% endfor %}
-    </ul>
-    {% else %}
-    <p>Nao ha questoes disponiveis.</p>
-    {% endif %}
 
-    {% if user.is_superuser %}
-    <div>
-        <a href="{% url 'votacao:criarquestao' %}">Criar Questão</a><br>
-        <a href="{% url 'votacao:eliminarquestao' %}">Eliminar Questão</a>
-    </div>
-    {% endif %}
 </head>
 <body>
 
+<form action="{% url 'votacao:logout' %}" method="post">
+    {% csrf_token %}
+    <button type="submit">Logout</button>
+</form>
+
+{% if latest_question_list %}
+<ul>
+    {% for questao in latest_question_list %}
+    <li>
+        <a href="{% url 'votacao:detalhe' questao.id %}">
+            {{ questao.questao_texto }}
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>Nao ha questoes disponiveis.</p>
+{% endif %}
+
+{% if user.is_superuser %}
+<div>
+    <a href="{% url 'votacao:criarquestao' %}">Criar Questão</a><br>
+    <a href="{% url 'votacao:eliminarquestao' %}">Eliminar Questão</a>
+</div>
+{% endif %}
 </body>
 </html>

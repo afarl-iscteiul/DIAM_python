@@ -28,3 +28,9 @@ class Opcao(models.Model):
 class Aluno(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     curso = models.CharField(max_length=100)
+    # Cada utilizador tem um limite para o número de votos que pode realizar no site.
+    # Esse limite é definido pelo número do seu grupo de trabalho acrescido de 10.
+    # Por exemplo, para o grupo “LIGEPL10” o limite é 20; para “LEI-22” o limite é 32; para “TB-03” o limite é 13; e assim por diante.
+    numero_grupo = 12
+    grupo = models.IntegerField(default=numero_grupo)
+    votos = models.IntegerField(default=numero_grupo + 10)
