@@ -54,6 +54,17 @@ def criarquestao(request):
         return render(request, 'votacao/criarquestao.html')
 
 
+def eliminarquestao(request):
+
+    if request.method == 'POST':
+        questao_selecionada= request.POST.get("questao_id")
+        questao_selecionada.delete()
+
+        return HttpResponseRedirect(reverse('votacao:index'))
+    else:
+        return render(request, 'votacao/eliminarquestao.html')
+
+
 def registo(request):
     if request.method == 'POST':
         username = request.POST.get("username")
@@ -91,7 +102,7 @@ def eliminaropcao(request, questao_id):
         opcao_apagar.delete()
         return HttpResponseRedirect(reverse('votacao:detalhe', args=(questao.id,)))
     else:
-        return render(request, 'votacao/criaropcao.html', {'questao': questao})
+        return render(request, 'votacao/apagaropcao.html', {'questao': questao})
 
 
 def autenticar(request):

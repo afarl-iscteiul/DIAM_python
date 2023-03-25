@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        label{
+            font-size: 120%;
+        }
+    </style>
+</head>
+<body>
+
+ <form action="{% url 'votacao:eliminarquestao' %}" method="post">
+    {% csrf_token %}
+    <select name="questao_id" id="questao_id">
+        {% for questao in Questao.objects.all %}
+        <option value="{{ questao.id }}">{{ questao.questao_texto }}</option>
+        {% endfor %}
+    </select>
+    <input type="submit" value="APAGAR questão">
+</form>
+<input type=button value="Voltar" onClick="javascript:history.go(-1);">
+</body>
+</html>

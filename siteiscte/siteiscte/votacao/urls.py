@@ -12,10 +12,13 @@ urlpatterns = [
     path('<int:questao_id>/resultados', views.resultados, name='resultados'),
     # ex: votacao/5/voto
     path('<int:questao_id>/voto', views.voto, name='voto'),
-    path('criarquestao/', views.criarquestao, name='criarquestao'),
 
-    path('<int:questao_id>/criaropcao/', views.eliminaropcao, name='eliminaropcao'),
+
+    path('criarquestao/', views.criarquestao, name='criarquestao'),
+    path('eliminarquestao/', views.eliminarquestao, name='eliminarquestao'),
+
     path('<int:questao_id>/criaropcao/', views.criaropcao, name='criaropcao'),
+    path('<int:questao_id>/eliminaropcao/', views.eliminaropcao, name='eliminaropcao'),
 
     path('registo/', views.registo, name='registo'),
 
