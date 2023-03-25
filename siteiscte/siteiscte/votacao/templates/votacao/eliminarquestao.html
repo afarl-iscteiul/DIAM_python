@@ -14,7 +14,7 @@
  <form action="{% url 'votacao:eliminarquestao' %}" method="post">
     {% csrf_token %}
     <select name="questao_id" id="questao_id">
-        {% for questao in Questao.objects.all %}
+        {% for questao in questoes %}
         <option value="{{ questao.id }}">{{ questao.questao_texto }}</option>
         {% endfor %}
     </select>

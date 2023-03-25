@@ -55,14 +55,15 @@ def criarquestao(request):
 
 
 def eliminarquestao(request):
-
+    questoes = Questao.objects.all()
     if request.method == 'POST':
-        questao_selecionada= request.POST.get("questao_id")
+        questao_id = request.POST.get("questao_id")
+        questao_selecionada = Questao.objects.get(id=questao_id)
         questao_selecionada.delete()
 
         return HttpResponseRedirect(reverse('votacao:index'))
     else:
-        return render(request, 'votacao/eliminarquestao.html')
+        return render(request, 'votacao/eliminarquestao.html', {'questoes': questoes})
 
 
 def registo(request):
@@ -120,8 +121,9 @@ def autenticar(request):
 def logout(request):
     logout(request)
     # direcionar pag sucesso
+    # ...
 
 
-def umaview(request):
+def loginerror(request):
     if not request.user.is_authenticated:
-        return render(request, 'votacao/login_error.html')
+        return render(request, 'votacao/loginerror.html')
