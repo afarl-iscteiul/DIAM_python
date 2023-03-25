@@ -7,3 +7,9 @@ IN[b]: q = Questao.objects.filter(questao_texto__startswith='Gostas de programar
     #esta merda n atribui...
 
 OUT[b]:
+
+
+
+ python .\manage.py makemigrations votacao
+ python .\manage.py sqlmigrate votacao 0001
+ python .\manage.py migrate
