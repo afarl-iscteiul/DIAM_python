@@ -23,7 +23,7 @@ urlpatterns = [
 
     path('registo/', views.registo, name='registo'),
 
-    path('loginerror/',views.loginerror, name='loginerror'),
+    path('loginerror/', views.loginerror, name='loginerror'),
 
     path('', views.autenticar, name='autenticar'),
 ]

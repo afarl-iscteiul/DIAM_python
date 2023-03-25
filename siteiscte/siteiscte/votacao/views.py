@@ -1,7 +1,7 @@
 import datetime
 
 
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.utils import timezone
 
@@ -13,23 +13,30 @@ from django.contrib.auth.models import User
 
 
 def index(request):
-    # loginerror(request)
+    if not request.user.is_authenticated:
+        return render(request, 'votacao/login.html')
     latest_question_list = Questao.objects.order_by('-pub_data')[:5]
     context = {'latest_question_list': latest_question_list}
     return render(request, 'votacao/index.html', context)
 
 
 def detalhe(request, questao_id):
+    if not request.user.is_authenticated:
+        return render(request, 'votacao/login.html')
     questao = get_object_or_404(Questao, pk=questao_id)
     return render(request, 'votacao/detalhe.html', {'questao': questao})
 
 
 def resultados(request, questao_id):
+    if not request.user.is_authenticated:
+        return render(request, 'votacao/login.html')
     questao = get_object_or_404(Questao, pk=questao_id)
     return render(request, 'votacao/resultados.html', {'questao': questao})
 
 
 def voto(request, questao_id):
+    if not request.user.is_authenticated:
+        return render(request, 'votacao/login.html')
     questao = get_object_or_404(Questao, pk=questao_id)
     aluno = Aluno.objects.get(user_id=request.user.id)
     try:
@@ -50,6 +57,8 @@ def voto(request, questao_id):
 
 
 def criarquestao(request):
+    if not request.user.is_authenticated:
+        return render(request, 'votacao/login.html')
     if request.method == 'POST':
         try:
             questao_texto = request.POST.get("questao_texto")
@@ -66,6 +75,8 @@ def criarquestao(request):
 
 
 def eliminarquestao(request):
+    if not request.user.is_authenticated:
+        return render(request, 'votacao/login.html')
     questoes = Questao.objects.all()
     if request.method == 'POST':
         try:
@@ -99,6 +110,8 @@ def registo(request):
 
 
 def criaropcao(request, questao_id):
+    if not request.user.is_authenticated:
+        return render(request, 'votacao/login.html')
     questao = get_object_or_404(Questao, pk=questao_id)
     if request.method == 'POST':
         try:
@@ -117,6 +130,8 @@ def criaropcao(request, questao_id):
 
 
 def eliminaropcao(request, questao_id):
+    if not request.user.is_authenticated:
+        return render(request, 'votacao/login.html')
     questao = get_object_or_404(Questao, pk=questao_id)
     if request.method == 'POST':
         try:
@@ -150,8 +165,8 @@ def autenticar(request):
 
 def logoutview(request):
     logout(request)
-    return render(request, 'votacao/index.html')
+    return HttpResponseRedirect(reverse('votacao:index'))
 
 def loginerror(request):
     if not request.user.is_authenticated:
-        return render(request, 'votacao/loginerror.html')
+        return render(request, 'votacaologinerror.html')
