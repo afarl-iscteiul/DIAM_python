@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        label{
+            font-size: 120%;
+        }
+    </style>
+</head>
+<body>
+<h1>{{ questao.questao_texto }}</h1>
+  {% if error_message %}
+  <p><strong>{{ error_message}}</strong></p>
+  {% endif %}
+  <form action="{% url 'votacao:apagaropcao' questao.id %}" method="post">
+    {% csrf_token %}
+      <select name="opcao_id">
+        {% for entry in Opcao %}
+          <option value="{{ Opcao.id }}">{{ Opcao.opcao_texto}}</option>
+{% endfor %}
+      </select>
+      <input type="submit" value="Gravar nova Opção">
+  </form>
+<input type=button value="Voltar" onClick="javascript:history.go(-1);">
+</body>
+</html>

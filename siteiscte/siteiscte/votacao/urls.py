@@ -1,4 +1,3 @@
-
 from django.urls import path, include
 from . import views
 from django.contrib import admin
@@ -6,14 +5,18 @@ from django.contrib import admin
 app_name = 'votacao'
 urlpatterns = [
     # ex: votacao/
-    path("", views.index, name='index'),
+    path('index/', views.index, name='index'),
     # ex: votacao/1
-    path("<int:questao_id>", views.detalhe,name='detalhe'),
+    path("<int:questao_id>", views.detalhe, name='detalhe'),
     # ex: votacao/3/resultados
     path('<int:questao_id>/resultados', views.resultados, name='resultados'),
     # ex: votacao/5/voto
-    path('<int:questao_id>/voto', views.voto,name='voto'),
+    path('<int:questao_id>/voto', views.voto, name='voto'),
     path('criarquestao/', views.criarquestao, name='criarquestao'),
+
+    path('<int:questao_id>/criaropcao/', views.eliminaropcao, name='eliminaropcao'),
     path('<int:questao_id>/criaropcao/', views.criaropcao, name='criaropcao'),
+
     path('registo/', views.registo, name='registo'),
+    path('', views.autenticar, name='autenticar'),
 ]

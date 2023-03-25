@@ -4,22 +4,38 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <style>
-        label{
+        label {
             font-size: 120%;
         }
     </style>
 </head>
 <body>
 <h1>{{ questao.questao_texto }}</h1>
-  {% if error_message %}
-  <p><strong>{{ error_message}}</strong></p>
-  {% endif %}
-  <form action="{% url 'votacao:criaropcao' questao.id %}" method="post">
+{% if error_message %}
+<p><strong>{{ error_message}}</strong></p>
+{% endif %}
+<form action="{% url 'votacao:criaropcao' questao.id %}" method="post">
     {% csrf_token %}
-      <label for="opcao_texto">Texto da nova Opção:</label>
-      <input type="text" name="opcao_texto"/><br/><br/>
-      <input type="submit" value="Gravar nova Opção">
-  </form>
+    <label for="opcao_texto">Texto da nova Opção:</label>
+    <input type="text" name="opcao_texto"/><br/><br/>
+    <input type="submit" value="Gravar nova Opção">
+</form>
 <input type=button value="Voltar" onClick="javascript:history.go(-1);">
+
+
+
+
+<form action="{% url 'votacao:eliminaropcao' questao.id %}" method="post">
+    {% csrf_token %}
+    <select name="opcao_id" id="opcao_id">
+        {% for opcao in questao.opcao_set.all %}
+        <option value="{{ opcao.id }}">{{ opcao.opcao_texto }}</option>
+        {% endfor %}
+    </select>
+    <input type="submit" value="APAGAR Opção">
+</form>
+
+
+
 </body>
 </html>

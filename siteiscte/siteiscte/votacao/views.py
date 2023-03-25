@@ -8,6 +8,7 @@ from django.urls import reverse
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 
+
 def index(request):
     latest_question_list = Questao.objects.order_by('-pub_data')[:5]
     context = {'latest_question_list': latest_question_list}
@@ -59,7 +60,7 @@ def registo(request):
         email = request.POST.get("email")
         password = request.POST.get("password")
         curso = request.POST.get("curso")
-        user = User.objects.create_user(username,email,password)
+        user = User.objects.create_user(username, email, password)
         # user.save()
         novouser = Aluno(user=user, curso=curso)
         novouser.user.username
@@ -80,20 +81,36 @@ def criaropcao(request, questao_id):
     else:
         return render(request, 'votacao/criaropcao.html', {'questao': questao})
 
-def login(request):
-    username = request.POST['username']
-    password = request.POST['password']
-    user = authenticate(username=username,password=password)
-    if user is not None:
-        login(request,user)
-        return HttpResponseRedirect(reverse('votacao:index'))
+
+def eliminaropcao(request, questao_id):
+    questao = get_object_or_404(Questao, pk=questao_id)
+    if request.method == 'POST':
+        opcao_seleccionada = request.POST.get("opcao_id")
+        # opcao_apagar = get_object_or_404(Opcao, id=opcao_seleccionada)
+        opcao_apagar = questao.opcao_set.get(pk=opcao_seleccionada)
+        opcao_apagar.delete()
+        return HttpResponseRedirect(reverse('votacao:detalhe', args=(questao.id,)))
     else:
-        return render(request, 'votacao/login_error.html')
+        return render(request, 'votacao/criaropcao.html', {'questao': questao})
+
+
+def autenticar(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return HttpResponseRedirect(reverse('votacao:index'))
+    else:
+        return render(request, 'votacao/login.html')
+
 
 def logout(request):
     logout(request)
-    #direcionar pag sucesso
+    # direcionar pag sucesso
+
 
 def umaview(request):
     if not request.user.is_authenticated:
-        return render(request,'votacao/login_error.html')
+        return render(request, 'votacao/login_error.html')

@@ -15,23 +15,23 @@
 </head>
 <body>
 <br/>
-<form align="center" action="{% url 'votacao:login' %}" method="post">
+<form align="center" action="{% url 'votacao:autenticar' %}" method="post">
+  {% csrf_token %}
   <div class="container" >
     <label for="username"><b>Username</b></label>
     <input type="text" placeholder="Enter Username" name="username" required>
     <br/>
     <br/>
-    <label for="psw"><b>Password</b></label>
-    <input type="password" placeholder="Enter Password" name="psw" required>
+    <label for="password"><b>Password</b></label>
+    <input type="password" placeholder="Enter Password" name="password" required>
     <br/>
     <br/>
     <button type="submit">Login</button>
   </div>
     <br/>
   <div class="container" >
-    <span class="psw">Recuperar <a href="#">password</a>?</span>
     <br/>
-    <a href="registo.html">Registar</a>
+    <a href="votacao:registo">Registar</a>
   </div>
 </form>
 
