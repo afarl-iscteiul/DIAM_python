@@ -33,7 +33,8 @@ def voto(request, questao_id):
         opcao_seleccionada = questao.opcao_set.get(pk=request.POST['opcao'])
     except (KeyError, Opcao.DoesNotExist):
         # Apresenta de novo o form para votar
-        return render(request, 'votacao/detalhe.html', {'questao': questao, 'error_message': "Não escolheu uma opção", })
+        return render(request, 'votacao/detalhe.html',
+                      {'questao': questao, 'error_message': "Não escolheu uma opção", })
     else:
         if aluno.votos > 0:
             aluno.votos -= 1
@@ -42,7 +43,8 @@ def voto(request, questao_id):
             opcao_seleccionada.save()
             return HttpResponseRedirect(reverse('votacao:resultados', args=(questao.id,)))
         else:
-            return render(request, 'votacao/detalhe.html',  {'questao': questao, 'error_message': "Não tem votos suficientes", })
+            return render(request, 'votacao/detalhe.html',
+                          {'questao': questao, 'error_message': "Não tem votos suficientes",})
 
 
 def criarquestao(request):
@@ -95,7 +97,6 @@ def criaropcao(request, questao_id):
         return render(request, 'votacao/criaropcao.html', {'questao': questao})
 
 
-
 def eliminaropcao(request, questao_id):
     questao = get_object_or_404(Questao, pk=questao_id)
     if request.method == 'POST':
@@ -126,6 +127,7 @@ def autenticar(request):
 def logoutview(request):
     logout(request)
     return render(request, 'votacao/index.html')
+
 
 def loginerror(request):
     if not request.user.is_authenticated:
