@@ -2,14 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Criar opção para questão {{questao.id}}</title>
-    <style>
-        label{
-            font-size: 120%;
-        }
-    </style>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'votacao/css/styles.css' %}">
+    <title>Create Option</title>
+
 
 </head>
+
+<header>
+
+<a href="https://www.iscte-iul.pt/">
+    {% load static %}
+    <img src="{% static 'votacao/images/iscte.gif' %}" alt="image not found"  title="https://www.iscte-iul.pt/" >
+          </a>
+</header>
+
 <body>
     <a href= "{% url 'votacao:index'%}">
 

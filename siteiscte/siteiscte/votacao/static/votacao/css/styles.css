@@ -76,8 +76,14 @@ footer {
 
 
 /* ELEMENTS */
-p{}
+label{
+    font-size: 120%;
+    display: table-cell;
+}
 
+p {
+    display: table-row
+}
 
 ol{
     display: inline-block;
@@ -97,6 +103,7 @@ legend{
 
 form{
     font-size:20px;
+    display: table;
 }
 
 input {
@@ -105,6 +112,7 @@ input {
     margin-right:auto;
     margin-left:auto;
     aligment:center;
+    display: table-cell;
 }
 
 table{
