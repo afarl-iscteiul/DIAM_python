@@ -1,9 +1,12 @@
 from django.urls import include, path
 from . import views
-
+from django.conf import settings
+from django.conf.urls.static import static
 
 app_name = 'votacao'
 
+# if settings.DEBUG:
+#     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns = [
 
@@ -42,5 +45,6 @@ urlpatterns = [
 
     # ex: votacao/5/voto
     path('<int:questao_id>/voto', views.voto, name='voto'),
+
 
 ]

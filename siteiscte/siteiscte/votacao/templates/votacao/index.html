@@ -2,41 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'votacao/css/styles.css' %}">
     <title>Index</title>
 
+
 </head>
-<body>
 
+<header>
 
-    <a href="https://www.iscte-iul.pt/">
-        <img src="https://www.iscte-iul.pt/assets/images/logo_iscte_detailed.svg"
-             alt="image not found"
-             title="https://www.iscte-iul.pt/">
-    </a>
+<a href="https://www.iscte-iul.pt/">
+    {% load static %}
+    <img src="{% static 'votacao/images/iscte.gif' %}" alt="image not found"  title="https://www.iscte-iul.pt/" >
+          </a>
 <p>
-
-    <div>
-        <form action="{% url 'votacao:logout' %}"
-              method="post">
-
-            {% csrf_token %}
-
-            <button type = "submit">Logout</button>
-
-        </form>
-
-        <p>
-           {% if not user.is_superuser %}
-        <form action="{% url 'votacao:paginapessoal' %}"
-              method="post">
-
-            {% csrf_token %}
-
-            <button type = "submit">Página pessoal</button>
-
-        </form>
-            {% endif %}
-    </div>
 
 
 {% if request.user.is_authenticated %}
@@ -51,6 +30,37 @@
 
 </div>
 {% endif %}
+
+</header>
+
+<aside>
+<div>
+    <form action="{% url 'votacao:logout' %}"
+          method="post">
+
+        {% csrf_token %}
+
+        <button type = "submit">Logout</button>
+
+    </form>
+
+    <p>
+        {% if not user.is_superuser %}
+    <form action="{% url 'votacao:paginapessoal' %}"
+          method="post">
+
+        {% csrf_token %}
+
+        <button type = "submit">Página pessoal</button>
+
+    </form>
+    {% endif %}
+</div>
+
+</aside>
+
+<body>
+
 
 <h1> Questões já criadas </h1>
 
