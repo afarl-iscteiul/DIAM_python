@@ -3,48 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <title>Index</title>
-
+    {% load static %}
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'votacao/style.css' %}"/>
 </head>
 <body>
 
 
-    <a href="https://www.iscte-iul.pt/">
-        <img src="https://www.iscte-iul.pt/assets/images/logo_iscte_detailed.svg"
-             alt="image not found"
-             title="https://www.iscte-iul.pt/">
-    </a>
+<a href="https://www.iscte-iul.pt/">
+    <img style="scale: 100%" src="{% static "votacao/images/logo_iscte_detailed.svg" %}">
+</a>
+
 <p>
 
-    <div>
-        <form action="{% url 'votacao:logout' %}"
-              method="post">
+<div>
+    <form action="{% url 'votacao:logout' %}"
+          method="post">
 
-            {% csrf_token %}
+        {% csrf_token %}
 
-            <button type = "submit">Logout</button>
+        <button type="submit">Logout</button>
 
-        </form>
+    </form>
 
-        <p>
-           {% if not user.is_superuser %}
-        <form action="{% url 'votacao:paginapessoal' %}"
-              method="post">
+    <p>
+        {% if not user.is_superuser %}
+    <form action="{% url 'votacao:paginapessoal' %}"
+          method="post">
 
-            {% csrf_token %}
+        {% csrf_token %}
 
-            <button type = "submit">Página pessoal</button>
+        <button type="submit">Página pessoal</button>
 
-        </form>
-            {% endif %}
-    </div>
+    </form>
+    {% endif %}
+</div>
 
 
 {% if request.user.is_authenticated %}
 <div>
-    <h1> <p>Bom dia {{request.user.username}}
+    <h1><p>Bom dia {{request.user.username}}
         {% if not request.user.is_superuser %}
 
-        já fez {{resultado}} votos. Os votos são limitados!</h1></p>
+        já fez {{resultado}} votos. Os votos são limitados!</h1>
+    </p>
     {% endif %}
     {% else %}
     <p>O utilizador não está logado</p>
@@ -60,7 +62,7 @@
     {% for questao in latest_question_list %}
     <li>
         <!--  <a href="/votacao/{{ questao.id }}">-->
-        <a href= "{% url 'votacao:detalhe' questao.id %}">
+        <a href="{% url 'votacao:detalhe' questao.id %}">
             {{ questao.questao_texto }}
         </a>
     </li>
