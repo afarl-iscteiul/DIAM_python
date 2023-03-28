@@ -2,10 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Registar</title>
+
     <style>
         form {
-            display: table
+            display: table;
             margin: 0 auto;
             position: absolute;
             top: 50%;
@@ -24,24 +25,36 @@
         input {
             display: table-cell;
         }
+
+        button {
+            alignment: center;
+        }
     </style>
 </head>
 <body>
-<form action="{% url 'votacao:registo' %}" method="post">
+<a href="https://www.iscte-iul.pt/">
+    <img src="https://www.iscte-iul.pt/assets/images/logo_iscte_detailed.svg"
+         alt="image not found"
+         title="https://www.iscte-iul.pt/">
+</a>
+<h1> CREATE USER </h1>
+
+<form action="{% url 'votacao:registo' %}"
+      method="post">
+
     {% csrf_token %}
     <p>
-        <label for="username"> Username:</label>
-        <input type="text" id="username" name="username">
+        <label for="user">Nome:</label>
+        <input type= "text" id="user" name= "user">
     </p>
     <p>
-        <label for="email"> E-mail:</label>
-        <input type="text" id="email" name="email">
+        <label for="mail">email:</label>
+        <input type= "text" id="mail" name= "mail">
     </p>
     <p>
-        <label for="password"> Password:</label>
-        <input type="password" id="password" name="password">
+        <label for="pass">Password:</label>
+        <input type= "password" id="pass" name= "pass">
     </p>
-
     <p>
         <label for="curso">Curso:</label>
         <select id="curso" name="curso">
@@ -53,8 +66,9 @@
         </select>
     </p>
     <p>
-        <button type="submit">Registar</button>
+        <button type="submit"> Registar </button>
     </p>
 </form>
+<br>
+<input type=button value="Voltar" onClick="javascript:history.go(-1);">
 </body>
-</html>

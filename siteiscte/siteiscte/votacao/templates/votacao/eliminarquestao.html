@@ -11,6 +11,13 @@
 </head>
 <body>
 
+
+    <a href="https://www.iscte-iul.pt/">
+        <img src="https://www.iscte-iul.pt/assets/images/logo_iscte_detailed.svg"
+             alt="image not found"
+             title="https://www.iscte-iul.pt/">
+    </a>
+
  <form action="{% url 'votacao:eliminarquestao' %}" method="post">
     {% csrf_token %}
     <select name="questao_id" id="questao_id">

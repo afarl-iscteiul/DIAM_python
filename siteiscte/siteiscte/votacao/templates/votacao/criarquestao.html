@@ -2,7 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Criar questão</title>
+    <style>
+        label{
+            font-size: 120%;
+        }
+    </style>
+
+
     <style>
         label{
             font-size: 120%;
@@ -23,17 +30,28 @@
             display: table-cell;
         }
     </style>
+
 </head>
 <body>
-<br/>
-<form action="{% url 'votacao:criarquestao' %}" method="post">
+    <a href= "{% url 'votacao:index'%}">
+
+    <img src="https://tse3.mm.bing.net/th?id=OIP.x07oF4t_c_-JRhj6hdtTIQHaH3&pid=Api"
+             alt="image not found"
+             title="Homepage" width ="100" height = "100"> </a>
+
+<form action="{% url 'votacao:criarquestao'%}"
+      method="post">
+
     {% csrf_token %}
+    <p>
     <label for="questao_texto">Texto da nova Questão:</label>
-    <input type="text" name="questao_texto"><br><br>
-    <input type="submit" value="Gravar nova Questão">
+    <input type="text" id="questao_texto" name="questao_texto"><br><br>
+    </p>
+    <br>
+    <input type="submit" value="Gravar nova Questão" />
+
 </form>
 <br/>
 <input type=button value="Voltar" onClick="javascript:history.go(-1);">
-
 </body>
 </html>

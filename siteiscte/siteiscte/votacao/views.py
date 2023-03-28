@@ -1,35 +1,55 @@
-import datetime
+from django.shortcuts import render
 
+# Create your views here.
 
-from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponse, Http404, HttpResponseRedirect
-from django.utils import timezone
-
-from .models import Questao, Opcao, Aluno
 from django.template import loader
+from django.http import Http404, HttpResponse, HttpResponseRedirect
+from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
-from django.contrib.auth import authenticate, login, logout
+from .models import Questao, Opcao, Aluno
+from django.utils import timezone
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, logout, login
 
+
+### -------------------- ### -------------------- ### -------------------- ### -------------------- ### -------------
 
 def index(request):
     if not request.user.is_authenticated:
         return render(request, 'votacao/login.html')
-    latest_question_list = Questao.objects.order_by('-pub_data')[:5]
-    context = {'latest_question_list': latest_question_list}
-    return render(request, 'votacao/index.html', context)
+
+    latest_question_list = Questao.objects.order_by('-pub_data')
+    # Caso quem acede seja o admin e ele nao vota
+    if not request.user.is_superuser:
+        aluno = Aluno.objects.get(user_id=request.user.id)
+        resultado = aluno.grupo + 10 - aluno.votos
+
+        context = {
+            'latest_question_list': latest_question_list, 'username': request.user.username, 'aluno': aluno,
+        "resultado":resultado}
+
+        return render(request, 'votacao/index.html', context)
+    else:
+        context = {
+            'latest_question_list': latest_question_list, 'username': request.user.username}
+
+        return render(request, 'votacao/index.html', context)
 
 
 def detalhe(request, questao_id):
     if not request.user.is_authenticated:
         return render(request, 'votacao/login.html')
+
     questao = get_object_or_404(Questao, pk=questao_id)
     return render(request, 'votacao/detalhe.html', {'questao': questao})
 
 
+### -------------------- ### -------------------- ### -------------------- ### -------------------- ### -------------
+
 def resultados(request, questao_id):
     if not request.user.is_authenticated:
         return render(request, 'votacao/login.html')
+
     questao = get_object_or_404(Questao, pk=questao_id)
     return render(request, 'votacao/resultados.html', {'questao': questao})
 
@@ -37,13 +57,16 @@ def resultados(request, questao_id):
 def voto(request, questao_id):
     if not request.user.is_authenticated:
         return render(request, 'votacao/login.html')
+
     questao = get_object_or_404(Questao, pk=questao_id)
     aluno = Aluno.objects.get(user_id=request.user.id)
+
     try:
         opcao_seleccionada = questao.opcao_set.get(pk=request.POST['opcao'])
+
     except (KeyError, Opcao.DoesNotExist):
-        return render(request, 'votacao/detalhe.html',
-                      {'questao': questao, 'error_message': "Não escolheu uma opção", })
+        return render(request, 'votacao/detalhe.html', {'questao': questao, 'error_message': "Não escolheu uma opção"})
+
     else:
         if aluno.votos > 0:
             aluno.votos -= 1
@@ -53,8 +76,10 @@ def voto(request, questao_id):
             return HttpResponseRedirect(reverse('votacao:resultados', args=(questao.id,)))
         else:
             return render(request, 'votacao/detalhe.html',
-                          {'questao': questao, 'error_message': "Não tem votos suficientes",})
+                          {'questao': questao, 'error_message': "Não tem votos suficientes", })
 
+
+### -------------------- ### -------------------- ### -------------------- ### -------------------- ### -------------
 
 def criarquestao(request):
     if not request.user.is_authenticated:
@@ -70,9 +95,8 @@ def criarquestao(request):
             return HttpResponseRedirect(reverse('votacao:detalhe', args=(questao.id,)))
         else:
             return HttpResponseRedirect(reverse('votacao:criarquestao'))
-    else:
-        return render(request, 'votacao/criarquestao.html')
 
+    return render(request, 'votacao/criarquestao.html')
 
 def eliminarquestao(request):
     if not request.user.is_authenticated:
@@ -89,30 +113,17 @@ def eliminarquestao(request):
             return HttpResponseRedirect(reverse('votacao:index'))
         else:
             return HttpResponseRedirect(reverse('votacao:eliminarquestao'))
-    else:
-        return render(request, 'votacao/eliminarquestao.html', {'questoes': questoes})
+
+    return render(request, 'votacao/eliminarquestao.html', {'questoes': questoes})
 
 
-def registo(request):
-    if request.method == 'POST':
-        username = request.POST.get("username")
-        email = request.POST.get("email")
-        password = request.POST.get("password")
-        curso = request.POST.get("curso")
-        user = User.objects.create_user(username, email, password)
-        # user.save()
-        novouser = Aluno(user=user, curso=curso)
-        novouser.user.username
-        novouser.save()
-        return HttpResponseRedirect(reverse('votacao:index'))
-    else:
-        return render(request, 'votacao/registo.html')
-
+### -------------------- ### -------------------- ### -------------------- ### -------------------- ### -------------
 
 def criaropcao(request, questao_id):
     if not request.user.is_authenticated:
         return render(request, 'votacao/login.html')
     questao = get_object_or_404(Questao, pk=questao_id)
+
     if request.method == 'POST':
         try:
             opcao_texto = request.POST.get("opcao_texto")
@@ -120,14 +131,13 @@ def criaropcao(request, questao_id):
             return render(request, 'votacao/criaropcao.html')
         if opcao_texto:
             votos = 0
-            opcao = Opcao(questao=questao, opcao_texto=opcao_texto, votos=votos)
+            opcao = questao.opcao_set.create(opcao_texto=opcao_texto, votos=votos)
             opcao.save()
             return HttpResponseRedirect(reverse('votacao:detalhe', args=(questao.id,)))
         else:
             return HttpResponseRedirect(reverse('votacao:criaropcao'))
-    else:
-        return render(request, 'votacao/criaropcao.html', {'questao': questao})
 
+    return render(request, 'votacao/criaropcao.html', {'questao': questao})
 
 def eliminaropcao(request, questao_id):
     if not request.user.is_authenticated:
@@ -143,30 +153,60 @@ def eliminaropcao(request, questao_id):
             opcao_apagar.delete()
             return HttpResponseRedirect(reverse('votacao:detalhe', args=(questao.id,)))
         else:
-            return HttpResponseRedirect(reverse('votacao:apagaropcao'))
+            return HttpResponseRedirect(reverse('votacao:eliminaropcao'))
     else:
-        return render(request, 'votacao/apagaropcao.html', {'questao': questao})
+        return render(request, 'votacao/eliminaropcao.html', {'questao': questao})
+
+### -------------------- ### -------------------- ### -------------------- ### -------------------- ### -------------
+
+
+def registo(request):
+
+    if request.method == 'POST':
+        username = request.POST['user']
+        mail = request.POST['mail']
+        password = request.POST['pass']
+
+        user = User.objects.create_user(username, mail, password)
+
+        curso = request.POST['curso']
+        aluno_user = Aluno(user=user, curso=curso)
+        aluno_user.user.username
+        aluno_user.save()
+
+        return HttpResponseRedirect(reverse('votacao:autenticar'))
+
+    return render(request, 'votacao/registo.html')
 
 
 def autenticar(request):
+
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
+
         user = authenticate(username=username, password=password)
+
         if user is not None:
             login(request, user)
             return HttpResponseRedirect(reverse('votacao:index'))
         else:
-            error_message = "Username ou passwords incorretos!"
+            error_message = "Username or password incorrect"
             return render(request, 'votacao/login.html', {'error_message': error_message})
-    else:
-        return render(request, 'votacao/login.html')
 
+    return render(request, 'votacao/login.html')
 
 def logoutview(request):
     logout(request)
-    return HttpResponseRedirect(reverse('votacao:index'))
+    return HttpResponseRedirect(reverse('votacao:autenticar'))
 
-def loginerror(request):
+
+def paginapessoal(request):
     if not request.user.is_authenticated:
-        return render(request, 'votacaologinerror.html')
+        return render(request, 'votacao/login.html')
+    aluno = Aluno.objects.get(user_id=request.user.id)
+
+    context = {
+        'aluno': aluno
+    }
+    return render(request, 'votacao/paginapessoal.html', context)

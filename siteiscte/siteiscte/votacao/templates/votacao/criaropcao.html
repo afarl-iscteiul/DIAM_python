@@ -2,26 +2,36 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Criar opção para questão {{questao.id}}</title>
     <style>
-        label {
+        label{
             font-size: 120%;
         }
     </style>
+
 </head>
 <body>
+    <a href= "{% url 'votacao:index'%}">
 
-<h1>{{ questao.questao_texto }}</h1>
-{% if error_message %}
-<p><strong>{{ error_message}}</strong></p>
-{% endif %}
-<form action="{% url 'votacao:criaropcao' questao.id %}" method="post">
+        <img src="https://tse3.mm.bing.net/th?id=OIP.x07oF4t_c_-JRhj6hdtTIQHaH3&pid=Api"
+             alt="image not found"
+             title="Homepage" width ="100" height = "100"> </a>
+
+
+<form action="{% url 'votacao:criaropcao' questao.id %}"
+      method="post">
+
     {% csrf_token %}
-    <label for="opcao_texto">Texto da nova Opção:</label>
-    <input type="text" name="opcao_texto"/><br/><br/>
-    <input type="submit" value="Gravar nova Opção">
-</form>
-<input type=button value="Voltar" onClick="javascript:history.go(-1);">
+    <p>
+        <label><b>Texto da nova Opção:</b></label>
+        <input type= "text" name= "opcao_texto">
+    </p>
+    <br>
+    <input type="submit" value="Gravar nova Opção" />
 
+</form>
+<br>
+<input type=button value="Voltar" onClick="javascript:history.go(-1);">
 </body>
 </html>
+

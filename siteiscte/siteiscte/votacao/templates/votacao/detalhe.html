@@ -1,33 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+  <meta charset="UTF-8">
+  <title>Detalhe questão {{questao.id}}</title>
+
 </head>
+
 <body>
+
+
+<a href= "{% url 'votacao:index'%}">
+
+    <img src="https://tse3.mm.bing.net/th?id=OIP.x07oF4t_c_-JRhj6hdtTIQHaH3&pid=Api"
+             alt="image not found"
+             title="Homepage" width ="100" height = "100"> </a>
+
+
 <h1>{{ questao.questao_texto }}</h1>
 {% if error_message %}
-<p><strong>{{ error_message}}</strong></p>
+<p><strong>{{ error_message }}</strong></p>
 {% endif %}
-<form action="{% url 'votacao:voto' questao.id %}" method="post">
+
+
+
+<form action="{% url 'votacao:voto' questao.id %}"
+      method="post">
     {% csrf_token %}
     {% for opcao in questao.opcao_set.all %}
-    <input type="radio" name="opcao" id="opcao{{ forloop.counter }}" value="{{ opcao.id }}"/>
+    <input type="radio" name="opcao"
+           id="opcao{{ forloop.counter }}"
+           value="{{ opcao.id }}" />
     <label for="opcao{{ forloop.counter }}">
         {{ opcao.opcao_texto }}
     </label>
-    <br/>
+    <br>
     {% endfor %}
-    <input type="submit" value="Voto"/>
+
+    <br>
+   {% if not user.is_superuser %}
+    <input type="submit" value="Voto" />
+    {% endif %}
+
 </form>
-<br/>
+
+
 {% if user.is_superuser %}
 <div>
-    <a href="{% url 'votacao:criaropcao' questao.id%}"> Criar opção</a><br>
+    <a href="{% url 'votacao:criaropcao' questao.id%}"> Criar opção</a>
+    <br>
     <a href="{% url 'votacao:eliminaropcao' questao.id%}"> Apagar opção</a>
 </div>
 {% endif %}
 <br/>
-<input type=button value="Voltar" onClick="javascript:history.go(-1);">
+
+<p>
+  <input type=button value="Voltar" onClick="javascript:history.go(-1);">
+</p>
+
 </body>
 </html>

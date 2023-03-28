@@ -1,29 +1,46 @@
-from django.urls import path, include
+from django.urls import include, path
 from . import views
-from django.contrib import admin
+
 
 app_name = 'votacao'
+
+
 urlpatterns = [
+
     # ex: votacao/
-    path('index/', views.index, name='index'),
+    path("", views.autenticar, name='autenticar'),
+
+    # ex: votacao/logout/
+    path("logout/", views.logoutview, name='logout'),
+
+    # ex: votacao/Personal
+    path("personal", views.paginapessoal, name='paginapessoal'),
+
+    # ex: votacao/main
+    path('main', views.index, name='index'),
+
+    # ex: votacao/registo
+    path('registo', views.registo, name='registo'),
+
+    # ex: votacao/criarquestao
+    path('criarquestao', views.criarquestao, name='criarquestao'),
+
+    # ex: votacao/eliminarquestao
+    path('eliminarquestao/', views.eliminarquestao, name='eliminarquestao'),
+
+    # ex: votacao/5/criaropcao
+    path('<int:questao_id>/criaropcao', views.criaropcao, name='criaropcao'),
+
+    # ex: votacao/5/eliminaropcao
+    path('<int:questao_id>/eliminaropcao/', views.eliminaropcao, name='eliminaropcao'),
+
     # ex: votacao/1
-    path("<int:questao_id>", views.detalhe, name='detalhe'),
+    path('<int:questao_id>', views.detalhe, name='detalhe'),
+
     # ex: votacao/3/resultados
     path('<int:questao_id>/resultados', views.resultados, name='resultados'),
+
     # ex: votacao/5/voto
     path('<int:questao_id>/voto', views.voto, name='voto'),
 
-    path('criarquestao/', views.criarquestao, name='criarquestao'),
-    path('eliminarquestao/', views.eliminarquestao, name='eliminarquestao'),
-
-    path('<int:questao_id>/criaropcao/', views.criaropcao, name='criaropcao'),
-    path('<int:questao_id>/eliminaropcao/', views.eliminaropcao, name='eliminaropcao'),
-
-    path("logout/", views.logoutview, name='logout'),
-
-    path('registo/', views.registo, name='registo'),
-
-    path('loginerror/', views.loginerror, name='loginerror'),
-
-    path('', views.autenticar, name='autenticar'),
 ]
