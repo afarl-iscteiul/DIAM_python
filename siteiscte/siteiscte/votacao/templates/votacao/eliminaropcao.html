@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        label{
+            font-size: 120%;
+        }
+    </style>
+</head>
+<body>
+<a href= "{% url 'votacao:index'%}">
+
+    <img src="https://tse3.mm.bing.net/th?id=OIP.x07oF4t_c_-JRhj6hdtTIQHaH3&pid=Api"
+             alt="image not found"
+             title="Homepage" width ="100" height = "100"> </a>
+
+<h1>{{ questao.questao_texto }}</h1>
+  {% if error_message %}
+  <p><strong>{{ error_message}}</strong></p>
+  {% endif %}
+ <form action="{% url 'votacao:eliminaropcao' questao.id %}" method="post">
+    {% csrf_token %}
+    <select name="opcao_id" id="opcao_id">
+        {% for opcao in questao.opcao_set.all %}
+        <option value="{{ opcao.id }}">{{ opcao.opcao_texto }}</option>
+        {% endfor %}
+    </select>
+    <input type="submit" value="APAGAR Opção">
+</form>
+<input type=button value="Voltar" onClick="javascript:history.go(-1);">
+</body>
+</html>
