@@ -1,7 +1,5 @@
+from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import render
-
-# Create your views here.
-
 from django.template import loader
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
@@ -14,10 +12,8 @@ from django.contrib.auth import authenticate, logout, login
 
 ### -------------------- ### -------------------- ### -------------------- ### -------------------- ### -------------
 
+@login_required(login_url='/votacao/')
 def index(request):
-    if not request.user.is_authenticated:
-        return render(request, 'votacao/login.html')
-
     latest_question_list = Questao.objects.order_by('-pub_data')
     # Caso quem acede seja o admin e ele nao vota
     if not request.user.is_superuser:
@@ -26,7 +22,7 @@ def index(request):
 
         context = {
             'latest_question_list': latest_question_list, 'username': request.user.username, 'aluno': aluno,
-        "resultado":resultado}
+            "resultado": resultado}
 
         return render(request, 'votacao/index.html', context)
     else:
@@ -36,37 +32,27 @@ def index(request):
         return render(request, 'votacao/index.html', context)
 
 
+@login_required(login_url='/votacao/')
 def detalhe(request, questao_id):
-    if not request.user.is_authenticated:
-        return render(request, 'votacao/login.html')
-
     questao = get_object_or_404(Questao, pk=questao_id)
     return render(request, 'votacao/detalhe.html', {'questao': questao})
 
 
 ### -------------------- ### -------------------- ### -------------------- ### -------------------- ### -------------
-
+@login_required(login_url='/votacao/')
 def resultados(request, questao_id):
-    if not request.user.is_authenticated:
-        return render(request, 'votacao/login.html')
-
     questao = get_object_or_404(Questao, pk=questao_id)
     return render(request, 'votacao/resultados.html', {'questao': questao})
 
 
+@login_required(login_url='/votacao/')
 def voto(request, questao_id):
-    if not request.user.is_authenticated:
-        return render(request, 'votacao/login.html')
-
     questao = get_object_or_404(Questao, pk=questao_id)
     aluno = Aluno.objects.get(user_id=request.user.id)
-
     try:
         opcao_seleccionada = questao.opcao_set.get(pk=request.POST['opcao'])
-
     except (KeyError, Opcao.DoesNotExist):
         return render(request, 'votacao/detalhe.html', {'questao': questao, 'error_message': "Não escolheu uma opção"})
-
     else:
         if aluno.votos > 0:
             aluno.votos -= 1
@@ -81,9 +67,8 @@ def voto(request, questao_id):
 
 ### -------------------- ### -------------------- ### -------------------- ### -------------------- ### -------------
 
+@login_required(login_url='/votacao/')
 def criarquestao(request):
-    if not request.user.is_authenticated:
-        return render(request, 'votacao/login.html')
     if request.method == 'POST':
         try:
             questao_texto = request.POST.get("questao_texto")
@@ -98,9 +83,9 @@ def criarquestao(request):
 
     return render(request, 'votacao/criarquestao.html')
 
+
+@login_required(login_url='/votacao/')
 def eliminarquestao(request):
-    if not request.user.is_authenticated:
-        return render(request, 'votacao/login.html')
     questoes = Questao.objects.all()
     if request.method == 'POST':
         try:
@@ -119,9 +104,8 @@ def eliminarquestao(request):
 
 ### -------------------- ### -------------------- ### -------------------- ### -------------------- ### -------------
 
+@login_required(login_url='/votacao/')
 def criaropcao(request, questao_id):
-    if not request.user.is_authenticated:
-        return render(request, 'votacao/login.html')
     questao = get_object_or_404(Questao, pk=questao_id)
 
     if request.method == 'POST':
@@ -139,9 +123,10 @@ def criaropcao(request, questao_id):
 
     return render(request, 'votacao/criaropcao.html', {'questao': questao})
 
+
+@login_required(login_url='/votacao/')
+@permission_required('auth.is_superuser')
 def eliminaropcao(request, questao_id):
-    if not request.user.is_authenticated:
-        return render(request, 'votacao/login.html')
     questao = get_object_or_404(Questao, pk=questao_id)
     if request.method == 'POST':
         try:
@@ -157,11 +142,11 @@ def eliminaropcao(request, questao_id):
     else:
         return render(request, 'votacao/eliminaropcao.html', {'questao': questao})
 
+
 ### -------------------- ### -------------------- ### -------------------- ### -------------------- ### -------------
 
 
 def registo(request):
-
     if request.method == 'POST':
         username = request.POST['user']
         mail = request.POST['mail']
@@ -180,7 +165,6 @@ def registo(request):
 
 
 def autenticar(request):
-
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
@@ -196,14 +180,13 @@ def autenticar(request):
 
     return render(request, 'votacao/login.html')
 
+@login_required(login_url='/votacao/')
 def logoutview(request):
     logout(request)
     return HttpResponseRedirect(reverse('votacao:autenticar'))
 
-
+@login_required(login_url='/votacao/')
 def paginapessoal(request):
-    if not request.user.is_authenticated:
-        return render(request, 'votacao/login.html')
     aluno = Aluno.objects.get(user_id=request.user.id)
 
     context = {

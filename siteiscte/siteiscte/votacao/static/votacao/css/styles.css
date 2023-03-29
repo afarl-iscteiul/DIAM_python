@@ -2,7 +2,7 @@
 
 html{
     background-color:rgb(250,250,250);
-    text-align:center;
+    /*text-align:center;*/
 }
 
 main{
@@ -87,6 +87,13 @@ p {
 
 ol{
     display: inline-block;
+    text-align: left;
+}
+ul{
+    text-align: left;
+}
+
+li{
     text-align: left;
 }
 

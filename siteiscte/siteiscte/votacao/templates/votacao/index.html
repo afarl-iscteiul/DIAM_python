@@ -5,84 +5,69 @@
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'votacao/css/styles.css' %}">
     <title>Index</title>
-
-
 </head>
 
 <header>
-
-<a href="https://www.iscte-iul.pt/">
-    {% load static %}
-    <img src="{% static 'votacao/images/iscte.gif' %}" alt="image not found"  title="https://www.iscte-iul.pt/" >
-          </a>
-<p>
-
-
-{% if request.user.is_authenticated %}
-<div>
-    <h1> <p>Bom dia {{request.user.username}}
-        {% if not request.user.is_superuser %}
-
-        já fez {{resultado}} votos. Os votos são limitados!</h1></p>
-    {% endif %}
+    <a href="https://www.iscte-iul.pt/">
+        {% load static %}
+        <img src="{% static 'votacao/images/iscte.gif' %}" alt="image not found" title="https://www.iscte-iul.pt/">
+    </a>
+    {% if request.user.is_authenticated %}
+    <div>
+        <h1>Bom dia {{request.user.username}}
+            {% if not request.user.is_superuser %}
+            já fez {{resultado}} votos. Os votos são limitados!
+            {% endif %}
+        </h1>
+    </div>
     {% else %}
-    <p>O utilizador não está logado</p>
-
-</div>
-{% endif %}
-
+    <h1>O utilizador não está logado</h1>
+    {% endif %}
 </header>
+<nav>
+<!--    link para logout-->
+    <form action="{% url 'votacao:logout' %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Logout</button>
+    </form>
+<!--    link para pagina pessoal -->
+    {% if not user.is_superuser %}
+    <form action="{% url 'votacao:paginapessoal' %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Página pessoal</button>
+    </form>
+    {% endif %}
+</nav>
 
 <aside>
-<div>
-    <form action="{% url 'votacao:logout' %}"
-          method="post">
+    <div>
 
-        {% csrf_token %}
 
-        <button type = "submit">Logout</button>
-
-    </form>
-
-    <p>
-        {% if not user.is_superuser %}
-    <form action="{% url 'votacao:paginapessoal' %}"
-          method="post">
-
-        {% csrf_token %}
-
-        <button type = "submit">Página pessoal</button>
-
-    </form>
-    {% endif %}
-</div>
+    </div>
 
 </aside>
 
 <body>
 
+<section>
+    <h1> Questões já criadas </h1>
+    {% if latest_question_list %}
+    <ul>
+        {% for questao in latest_question_list %}
+        <li>
+            <a href="{% url 'votacao:detalhe' questao.id %}">
+                {{ questao.questao_texto }}
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
 
-<h1> Questões já criadas </h1>
+    {% else %}
+    <p>Nao há questoes disponiveis.</p>
+    {% endif %}
+    {% if user.is_superuser %}
+</section>
 
-{% if latest_question_list %}
-
-<ul>
-    {% for questao in latest_question_list %}
-    <li>
-        <!--  <a href="/votacao/{{ questao.id }}">-->
-        <a href= "{% url 'votacao:detalhe' questao.id %}">
-            {{ questao.questao_texto }}
-        </a>
-    </li>
-    {% endfor %}
-</ul>
-
-{% else %}
-<p>Nao ha questoes disponiveis.</p>
-{% endif %}
-
-
-{% if user.is_superuser %}
 <div>
     <h3><a href="{% url 'votacao:criarquestao' %}">Criar Questão</a><br></h3>
     <h3><a href="{% url 'votacao:eliminarquestao' %}">Eliminar Questão</a></h3>
