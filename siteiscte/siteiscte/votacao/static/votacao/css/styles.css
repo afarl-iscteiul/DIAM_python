@@ -4,7 +4,15 @@ html{
     /*background-color:rgb(250,250,250);*/
     /*text-align:center;*/
 }
+.logo{
+    width: 60%;
+    display: block;
+    aspect-ratio: initial;
+    /*align: left;*/
+    margin-left: initial;
+    /*margin-right: auto;*/
 
+}
 main{
     margin-left: 140px; /* Same width as the sidebar + left position in px */
     font-size: 20px; /* Increased text to enable scrolling */
@@ -15,9 +23,9 @@ main{
 header {
 
     background-color: white;
-    font-size: 30px;
-    top:0%;
-    padding : 10px;
+    /*font-size: 10px;*/
+    /*top:0%;*/
+    /*padding : 10px;*/
 
 }
 
