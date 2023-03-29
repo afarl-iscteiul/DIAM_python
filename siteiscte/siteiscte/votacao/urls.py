@@ -17,13 +17,13 @@ urlpatterns = [
     path("logout/", views.logoutview, name='logout'),
 
     # ex: votacao/Personal
-    path("personal", views.paginapessoal, name='paginapessoal'),
+    path("personal/", views.paginapessoal, name='paginapessoal'),
 
     # ex: votacao/main
     path('main', views.index, name='index'),
 
     # ex: votacao/registo
-    path('registo', views.registo, name='registo'),
+    path('registo/', views.registo, name='registo'),
 
     # ex: votacao/criarquestao
     path('criarquestao', views.criarquestao, name='criarquestao'),

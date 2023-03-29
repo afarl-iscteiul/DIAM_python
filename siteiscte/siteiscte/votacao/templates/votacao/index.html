@@ -7,6 +7,8 @@
     <title>Index</title>
 </head>
 
+
+<body>
 <header>
     <a href="https://www.iscte-iul.pt/">
         {% load static %}
@@ -21,33 +23,22 @@
         </h1>
     </div>
     {% else %}
-    <h1>O utilizador não está logado</h1>
+    <h1>
+        O utilizador não está logado
+    </h1>
     {% endif %}
 </header>
 <nav>
-<!--    link para logout-->
-    <form action="{% url 'votacao:logout' %}" method="post">
-        {% csrf_token %}
-        <button type="submit">Logout</button>
-    </form>
-<!--    link para pagina pessoal -->
-    {% if not user.is_superuser %}
-    <form action="{% url 'votacao:paginapessoal' %}" method="post">
-        {% csrf_token %}
-        <button type="submit">Página pessoal</button>
-    </form>
-    {% endif %}
+    <a href="index.html">Home</a>
+<!--    {% if not user.is_superuser %}-->
+    <a href='personal/'> peçoal</a>
+<!--    {% endif %}-->
+    <a href="{% url 'votacao:logout' %}"> logout</a>
 </nav>
 
 <aside>
-    <div>
-
-
-    </div>
 
 </aside>
-
-<body>
 
 <section>
     <h1> Questões já criadas </h1>
