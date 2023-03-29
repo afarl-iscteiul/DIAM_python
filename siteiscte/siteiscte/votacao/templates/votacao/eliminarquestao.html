@@ -1,22 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <style>
-        label{
-            font-size: 120%;
-        }
-    </style>
-</head>
-<body>
+{% extends "votacao/index.html" %}
+
+{% block titulo %}
+Delete Question
+{% endblock %}
 
 
-    <a href="https://www.iscte-iul.pt/">
-        <img src="https://www.iscte-iul.pt/assets/images/logo_iscte_detailed.svg"
+{% block banner %}
+{% endblock %}
+
+{% block navegacao %}
+
+<a href= "{% url 'votacao:index'%}">
+  {% load static %}
+    <img src="{% static 'votacao/images/home.jpg' %}"
              alt="image not found"
-             title="https://www.iscte-iul.pt/">
-    </a>
+             title="Homepage" width ="100" height = "100">
+</a>
+{% endblock %}
+
+
+{% block conteudo %}
 
  <form action="{% url 'votacao:eliminarquestao' %}" method="post">
     {% csrf_token %}
@@ -27,6 +30,12 @@
     </select>
     <input type="submit" value="APAGAR questão">
 </form>
-<input type=button value="Voltar" onClick="javascript:history.go(-1);">
-</body>
-</html>
+{% endblock %}
+
+
+{% block opcoes_e_controlos %}
+<p>
+  <input type=button value="Voltar" onClick="javascript:history.go(-1);">
+</p>
+
+{% endblock %}

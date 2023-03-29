@@ -1,30 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'votacao/css/styles.css' %}">
-    <title>Create Option</title>
+{% extends "votacao/index.html" %}
+
+{% block titulo %}
+Create Option
+{% endblock %}
 
 
-</head>
+{% block banner %}
+{% endblock %}
 
-<header>
+{% block navegacao %}
 
-<a href="https://www.iscte-iul.pt/">
-    {% load static %}
-    <img src="{% static 'votacao/images/iscte.gif' %}" alt="image not found"  title="https://www.iscte-iul.pt/" >
-          </a>
-</header>
-
-<body>
-    <a href= "{% url 'votacao:index'%}">
-
-        <img src="https://tse3.mm.bing.net/th?id=OIP.x07oF4t_c_-JRhj6hdtTIQHaH3&pid=Api"
+<a href= "{% url 'votacao:index'%}">
+  {% load static %}
+    <img src="{% static 'votacao/images/home.jpg' %}"
              alt="image not found"
-             title="Homepage" width ="100" height = "100"> </a>
+             title="Homepage" width ="100" height = "100">
+</a>
+{% endblock %}
 
 
+{% block conteudo %}
 <form action="{% url 'votacao:criaropcao' questao.id %}"
       method="post">
 
@@ -37,8 +32,15 @@
     <input type="submit" value="Gravar nova Opção" />
 
 </form>
-<br>
-<input type=button value="Voltar" onClick="javascript:history.go(-1);">
-</body>
-</html>
 
+
+</form>
+{% endblock %}
+
+
+{% block opcoes_e_controlos %}
+<p>
+  <input type=button value="Voltar" onClick="javascript:history.go(-1);">
+</p>
+
+{% endblock %}

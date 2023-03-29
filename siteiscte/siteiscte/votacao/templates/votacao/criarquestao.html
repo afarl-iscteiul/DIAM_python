@@ -1,18 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Criar questão</title>
+{% extends "votacao/index.html" %}
 
-</head>
+{% block titulo %}
+Create Question
+{% endblock %}
 
 
-<body>
-    <a href= "{% url 'votacao:index'%}">
+{% block banner %}
+{% endblock %}
 
-    <img src="https://tse3.mm.bing.net/th?id=OIP.x07oF4t_c_-JRhj6hdtTIQHaH3&pid=Api"
+{% block navegacao %}
+
+<a href= "{% url 'votacao:index'%}">
+  {% load static %}
+    <img src="{% static 'votacao/images/home.jpg' %}"
              alt="image not found"
-             title="Homepage" width ="100" height = "100"> </a>
+             title="Homepage" width ="100" height = "100">
+</a>
+{% endblock %}
+
+
+{% block conteudo %}
 
 <form action="{% url 'votacao:criarquestao'%}"
       method="post">
@@ -26,7 +33,15 @@
     <input type="submit" value="Gravar nova Questão" />
 
 </form>
-<br/>
-<input type=button value="Voltar" onClick="javascript:history.go(-1);">
-</body>
-</html>
+
+
+</form>
+{% endblock %}
+
+
+{% block opcoes_e_controlos %}
+<p>
+  <input type=button value="Voltar" onClick="javascript:history.go(-1);">
+</p>
+
+{% endblock %}
