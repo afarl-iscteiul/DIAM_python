@@ -8,6 +8,9 @@ from .models import Questao, Opcao, Aluno
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, logout, login
+from django.shortcuts import render
+from django.conf import settings
+from django.core.files.storage import FileSystemStorage
 
 
 ### -------------------- ### -------------------- ### -------------------- ### -------------------- ### -------------
@@ -180,10 +183,12 @@ def autenticar(request):
 
     return render(request, 'votacao/login.html')
 
+
 @login_required(login_url='/votacao/')
 def logoutview(request):
     logout(request)
     return HttpResponseRedirect(reverse('votacao:autenticar'))
+
 
 @login_required(login_url='/votacao/')
 def paginapessoal(request):
@@ -193,3 +198,13 @@ def paginapessoal(request):
         'aluno': aluno
     }
     return render(request, 'votacao/paginapessoal.html', context)
+
+
+def fazer_upload(request):
+    if request.method == 'POST' and request.FILES['myfile']:
+        myfile = request.FILES['myfile']
+        fs = FileSystemStorage()
+        filename = fs.save(myfile.name, myfile)
+        uploaded_file_url = fs.url(filename)
+        return render(request, 'votacao/fazer_upload.html', {'uploaded_file_url': uploaded_file_url})
+    return render(request, 'votacao/fazer_upload.html')

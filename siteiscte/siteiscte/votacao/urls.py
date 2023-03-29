@@ -11,8 +11,6 @@ app_name = 'votacao'
 
 urlpatterns = [
 
-
-
     # ex: votacao/
     path("", views.autenticar, name='autenticar'),
 
@@ -20,7 +18,7 @@ urlpatterns = [
     path("logout/", views.logoutview, name='logout'),
 
     # ex: votacao/Personal
-    path("personal/", views.paginapessoal, name='paginapessoal'),
+    path("main/personal/", views.paginapessoal, name='paginapessoal'),
 
     # ex: votacao/main
     path('main/', views.index, name='index'),
@@ -52,5 +50,7 @@ urlpatterns = [
     # ex: votacao/5/voto
     path('<int:questao_id>/voto', views.voto, name='voto'),
 
+    # uploads
+    path('fazer_upload', views.fazer_upload, name='fazer_upload'),
 
 ]
