@@ -8,7 +8,7 @@ Personal page
 {% block banner %}
 
 {% if request.user.is_authenticated %}
-<h1> <p>O {{request.user.username}} está logado</h1></p>
+<h1><p>O {{request.user.username}} está logado</h1></p>
 {% else %}
 <p>O utilizador não está logado</p>
 {% endif %}
@@ -17,11 +17,11 @@ Personal page
 
 {% block navegacao %}
 
-<a href= "{% url 'votacao:index'%}">
-  {% load static %}
+<a href="{% url 'votacao:index'%}">
+    {% load static %}
     <img src="{% static 'votacao/images/home.jpg' %}"
-             alt="image not found"
-             title="Homepage" width ="100" height = "100">
+         alt="image not found"
+         title="Homepage" width="100" height="100">
 </a>
 {% endblock %}
 
@@ -31,15 +31,15 @@ Personal page
 <h1> Dados Pessoais </h1>
 
 <ul>
-     <li>
-            Username: {{ user.username }}
+    <li>
+        Username: {{ user.username }}
     </li>
-     <li>
-            Email: {{ user.email }}
+    <li>
+        Email: {{ user.email }}
     </li>
 
     <li>
-            Data de registo: {{ user.date_joined }}
+        Data de registo: {{ user.date_joined }}
     </li>
 
 
@@ -48,26 +48,33 @@ Personal page
 <h1> Dados Aluno </h1>
 
 <ul>
-     <li>
-          Curso:  {{ aluno.curso }}
+    <li>
+        Curso: {{ aluno.curso }}
     </li>
 </ul>
 
 <br>
+{% if user.Aluno.avatar %}
+    <img src="{{ user.Aluno.avatar.url }}" alt="{{ user.username }}'s profile picture">
+{% else %}
+    <p>Ola</p>
+<!--    {% load static %}-->
+<!--    <img style="width: 50px" class="logo" src="{% static 'votacao/avatars/default_avatar.jpg' %}">-->
+{% endif %}
 
-<form method="post" enctype="multipart/form-data"
-action="{% url 'votacao:fazer_upload' %}">
- {% csrf_token %}
- <input type="file" name="myfile">
- <input type="submit" value="Upload">
- </form>
+
+<form method="post" enctype="multipart/form-data" action="{% url 'votacao:fazer_upload' %}">
+    {% csrf_token %}
+    <input type="file" name="avatar">
+    <input type="submit" value="Upload">
+</form>
 
 {% endblock %}
 
 
 {% block opcoes_e_controlos %}
 <p>
-  <input type=button value="Voltar" onClick="javascript:history.go(-1);">
+    <input type=button value="Voltar" onClick="javascript:history.go(-1);">
 </p>
 
 {% endblock %}

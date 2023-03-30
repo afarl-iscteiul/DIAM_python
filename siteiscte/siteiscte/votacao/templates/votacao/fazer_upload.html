@@ -21,6 +21,12 @@ Upload Image
 
 {% block conteudo %}
 
+{% if user.userprofile.profile_picture %}
+    <img src="{{ user.userprofile.profile_picture.url }}" alt="{{ user.username }}'s profile picture">
+{% else %}
+    <p>No profile picture uploaded.</p>
+{% endif %}
+
 {% load static %}
 <form method="post" enctype="multipart/form-data"
       action="{% url 'votacao:fazer_upload' %}">
@@ -36,6 +42,8 @@ Upload Image
  </a>
 </p>
 {% endif %}
+
+
 
 {% endblock %}
 
