@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'votacao/css/styles.css' %}">
+    <title>Delete Option</title>
+
+
+</head>
+
+<header>
+
+<a href="https://www.iscte-iul.pt/">
+    {% load static %}
+    <img src="{% static 'votacao/images/iscte.gif' %}" alt="image not found"  title="https://www.iscte-iul.pt/" >
+          </a>
+</header>
+<body>
+<h1>{{ questao.questao_texto }}</h1>
+  {% if error_message %}
+  <p><strong>{{ error_message}}</strong></p>
+  {% endif %}
+ <form action="{% url 'votacao:eliminaropcao' questao.id %}" method="post">
+    {% csrf_token %}
+    <select name="opcao_id" id="opcao_id">
+        {% for opcao in questao.opcao_set.all %}
+        <option value="{{ opcao.id }}">{{ opcao.opcao_texto }}</option>
+        {% endfor %}
+    </select>
+    <input type="submit" value="APAGAR Opção">
+</form>
+<input type=button value="Voltar" onClick="javascript:history.go(-1);">
+</body>
+</html>

@@ -1,25 +1,16 @@
-{% extends "votacao/index.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
 
-{% block titulo %}
-Delete Option
-{% endblock %}
-
-
-{% block banner %}
-{% endblock %}
-
-{% block navegacao %}
-
+</head>
+<body>
 <a href= "{% url 'votacao:index'%}">
-  {% load static %}
-    <img src="{% static 'votacao/images/home.jpg' %}"
+
+    <img src="https://tse3.mm.bing.net/th?id=OIP.x07oF4t_c_-JRhj6hdtTIQHaH3&pid=Api"
              alt="image not found"
-             title="Homepage" width ="100" height = "100">
-</a>
-{% endblock %}
-
-
-{% block conteudo %}
+             title="Homepage" width ="100" height = "100"> </a>
 
 <h1>{{ questao.questao_texto }}</h1>
   {% if error_message %}
@@ -34,15 +25,6 @@ Delete Option
     </select>
     <input type="submit" value="APAGAR Opção">
 </form>
-
-
-</form>
-{% endblock %}
-
-
-{% block opcoes_e_controlos %}
-<p>
-  <input type=button value="Voltar" onClick="javascript:history.go(-1);">
-</p>
-
-{% endblock %}
+<input type=button value="Voltar" onClick="javascript:history.go(-1);">
+</body>
+</html>

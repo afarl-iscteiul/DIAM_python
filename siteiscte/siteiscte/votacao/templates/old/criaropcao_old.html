@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'votacao/css/styles.css' %}">
+    <title>Create Option</title>
+
+
+</head>
+
+<header>
+
+<a href="https://www.iscte-iul.pt/">
+    {% load static %}
+    <img src="{% static 'votacao/images/iscte.gif' %}" alt="image not found"  title="https://www.iscte-iul.pt/" >
+          </a>
+</header>
+
+<body>
+    <a href= "{% url 'votacao:index'%}">
+
+        <img src="https://tse3.mm.bing.net/th?id=OIP.x07oF4t_c_-JRhj6hdtTIQHaH3&pid=Api"
+             alt="image not found"
+             title="Homepage" width ="100" height = "100"> </a>
+
+
+<form action="{% url 'votacao:criaropcao' questao.id %}"
+      method="post">
+
+    {% csrf_token %}
+    <p>
+        <label><b>Texto da nova Opção:</b></label>
+        <input type= "text" name= "opcao_texto">
+    </p>
+    <br>
+    <input type="submit" value="Gravar nova Opção" />
+
+</form>
+<br>
+<input type=button value="Voltar" onClick="javascript:history.go(-1);">
+</body>
+</html>
+

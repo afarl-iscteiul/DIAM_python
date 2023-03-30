@@ -113,6 +113,8 @@ USE_I18N = True
 
 USE_TZ = True
 
+MEDIA_URL = '/votacao/static/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR,'votacao/static/media')
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/

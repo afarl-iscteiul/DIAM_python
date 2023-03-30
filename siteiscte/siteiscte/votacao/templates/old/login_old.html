@@ -1,12 +1,10 @@
-{% extends "votacao/index.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
 
-{% block titulo %}
-Login
-{% endblock %}
-
-
-{% block banner %}
-  <style>
+    <style>
         form {
             margin: 0 auto;
             position: absolute;
@@ -18,14 +16,16 @@ Login
             color:red;
         }
     </style>
-{% endblock %}
+</head>
+<body>
 
-{% block navegacao %}
+    <a href="https://www.iscte-iul.pt/">
+        <img src="https://www.iscte-iul.pt/assets/images/logo_iscte_detailed.svg"
+             alt="image not found"
+             title="https://www.iscte-iul.pt/">
+    </a>
 
-{% endblock %}
-
-
-{% block conteudo %}
+<h1> USER LOGIN </h1>
 
 <form align="center" action="{% url 'votacao:autenticar' %}" method="post">
 
@@ -50,9 +50,5 @@ Login
         <a href="{% url 'votacao:registo' %}">Registar</a>
     </div>
 </form>
-{% endblock %}
 
-
-{% block opcoes_e_controlos %}
-
-{% endblock %}
+</body>

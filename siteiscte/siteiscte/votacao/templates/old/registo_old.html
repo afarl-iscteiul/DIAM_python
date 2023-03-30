@@ -1,12 +1,10 @@
-{% extends "votacao/index.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Registar</title>
 
-{% block titulo %}
-Create user
-{% endblock %}
-
-
-{% block banner %}
-<style>
+    <style>
         form {
             display: table;
             margin: 0 auto;
@@ -32,16 +30,13 @@ Create user
             alignment: center;
         }
     </style>
-
-{% endblock %}
-
-{% block navegacao %}
-
-{% endblock %}
-
-
-{% block conteudo %}
-
+</head>
+<body>
+<a href="https://www.iscte-iul.pt/">
+    <img src="https://www.iscte-iul.pt/assets/images/logo_iscte_detailed.svg"
+         alt="image not found"
+         title="https://www.iscte-iul.pt/">
+</a>
 <h1> CREATE USER </h1>
 
 <form action="{% url 'votacao:registo' %}"
@@ -74,13 +69,6 @@ Create user
         <button type="submit"> Registar </button>
     </p>
 </form>
-
-{% endblock %}
-
-
-{% block opcoes_e_controlos %}
-<p>
-  <input type=button value="Voltar" onClick="javascript:history.go(-1);">
-</p>
-
-{% endblock %}
+<br>
+<input type=button value="Voltar" onClick="javascript:history.go(-1);">
+</body>
