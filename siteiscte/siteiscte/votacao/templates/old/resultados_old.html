@@ -1,24 +1,18 @@
-{% extends "votacao/index.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <title>Resultados questão {{questao.id}}</title>
 
-{% block titulo %}
-Results
-{% endblock %}
-
-
-{% block banner %}
-{% endblock %}
-
-{% block navegacao %}
+</head>
+<body>
  <a href= "{% url 'votacao:index'%}">
 
   {% load static %}
     <img src="{% static 'votacao/images/home.jpg' %}"
        alt="image not found"
        title="Homepage" width ="100" height = "100"> </a>
-{% endblock %}
 
-
-{% block conteudo %}
 <h1>{{ questao.questao_texto }}</h1>
 
 <ul>
@@ -32,13 +26,10 @@ Results
 
 <a href="{% url 'votacao:detalhe' questao.id %}">Votar novamente?</a>
 
-
-{% endblock %}
-
-
-{% block opcoes_e_controlos %}
+<br>
 <p>
-  <input type=button value="Voltar" onClick="javascript:history.go(-1);">
+ <input type=button value="Voltar" onClick="javascript:history.go(-1);">
 </p>
 
-{% endblock %}
+</body>
+</html>

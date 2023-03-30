@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required, permission_required
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.template import loader
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
@@ -201,10 +201,15 @@ def paginapessoal(request):
 
 
 def fazer_upload(request):
-    if request.method == 'POST' and request.FILES['myfile']:
-        myfile = request.FILES['myfile']
+    if request.method == 'POST' and request.FILES['avatar']:
+        myavatar = request.FILES['avatar']
         fs = FileSystemStorage()
-        filename = fs.save(myfile.name, myfile)
+        filename = fs.save(myavatar.name, myavatar)
         uploaded_file_url = fs.url(filename)
+        #update user image
+        aluno = Aluno.objects.get(user=request.user.id)
+        aluno.avatar = myavatar
+        aluno.save()
+
         return render(request, 'votacao/fazer_upload.html', {'uploaded_file_url': uploaded_file_url})
     return render(request, 'votacao/fazer_upload.html')

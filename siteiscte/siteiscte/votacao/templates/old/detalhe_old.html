@@ -1,14 +1,13 @@
-{% extends "votacao/index.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Detalhe questão {{questao.id}}</title>
 
-{% block titulo %}
-Detalhe questão {{questao.id}}
-{% endblock %}
+</head>
 
+<body>
 
-{% block banner %}
-{% endblock %}
-
-{% block navegacao %}
 
 <a href= "{% url 'votacao:index'%}">
   {% load static %}
@@ -16,10 +15,8 @@ Detalhe questão {{questao.id}}
              alt="image not found"
              title="Homepage" width ="100" height = "100">
 </a>
-{% endblock %}
 
 
-{% block conteudo %}
 <h1>{{ questao.questao_texto }}</h1>
 {% if error_message %}
 <p><strong>{{ error_message }}</strong></p>
@@ -46,10 +43,8 @@ Detalhe questão {{questao.id}}
 
 
 </form>
-{% endblock %}
 
 
-{% block opcoes_e_controlos %}
 {% if user.is_superuser %}
 <div>
     <a href="{% url 'votacao:criaropcao' questao.id%}"> Criar opção</a>
@@ -63,4 +58,5 @@ Detalhe questão {{questao.id}}
   <input type=button value="Voltar" onClick="javascript:history.go(-1);">
 </p>
 
-{% endblock %}
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Personal</title>
+     </head>
+<br>
+
+<body>
+    <a href="https://www.iscte-iul.pt/">
+        <img src="https://www.iscte-iul.pt/assets/images/logo_iscte_detailed.svg"
+             alt="image not found"
+             title="https://www.iscte-iul.pt/">
+    </a>
+{% if request.user.is_authenticated %}
+<h1> <p>O {{request.user.username}} está logado</h1></p>
+{% else %}
+<p>O utilizador não está logado</p>
+{% endif %}
+
+<h1> Dados Pessoais </h1>
+
+<ul>
+     <li>
+            Username: {{ user.username }}
+    </li>
+     <li>
+            Email: {{ user.email }}
+    </li>
+
+    <li>
+            Data de registo: {{ user.date_joined }}
+    </li>
+
+
+</ul>
+
+<h1> Dados Aluno </h1>
+
+<ul>
+     <li>
+          Curso:  {{ aluno.curso }}
+    </li>
+</ul>
+
+<br>
+
+<p>
+  <input type=button value="Voltar" onClick="javascript:history.go(-1);">
+</p>
+<form method="post" enctype="multipart/form-data"
+action="{% url 'votacao:fazer_upload' %}">
+ {% csrf_token %}
+ <input type="file" name="myfile">
+ <input type="submit" value="Upload">
+ </form>
+
+</body>

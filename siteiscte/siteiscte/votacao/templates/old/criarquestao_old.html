@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Criar questão</title>
+
+</head>
+
+
+<body>
+    <a href= "{% url 'votacao:index'%}">
+
+    <img src="votacao/images/home.jpg"
+             alt="image not found"
+             title="Homepage" width ="100" height = "100"> </a>
+
+<form action="{% url 'votacao:criarquestao'%}"
+      method="post">
+
+    {% csrf_token %}
+    <p>
+    <label for="questao_texto">Texto da nova Questão:</label>
+    <input type="text" id="questao_texto" name="questao_texto"><br><br>
+    </p>
+    <br>
+    <input type="submit" value="Gravar nova Questão" />
+
+</form>
+<br/>
+<input type=button value="Voltar" onClick="javascript:history.go(-1);">
+</body>
+</html>

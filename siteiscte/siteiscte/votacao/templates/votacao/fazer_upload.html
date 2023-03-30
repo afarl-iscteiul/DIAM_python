@@ -1,34 +1,56 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "votacao/index.html" %}
+
+{% block titulo %}
+Upload Image
+{% endblock %}
+
+
+{% block banner %}
+{% endblock %}
+
+{% block navegacao %}
+
+<a href= "{% url 'votacao:index'%}">
+ {% load static %}
+ <img src="{% static 'votacao/images/home.jpg' %}"
+      alt="image not found"
+      title="Homepage" width ="100" height = "100">
+</a>
+{% endblock %}
+
+
+{% block conteudo %}
+
+{% if user.userprofile.profile_picture %}
+    <img src="{{ user.userprofile.profile_picture.url }}" alt="{{ user.username }}'s profile picture">
+{% else %}
+    <p>No profile picture uploaded.</p>
+{% endif %}
 
 {% load static %}
- <form method="post" enctype="multipart/form-data"
-action="{% url 'votacao:fazer_upload' %}">
+<form method="post" enctype="multipart/form-data"
+      action="{% url 'votacao:fazer_upload' %}">
  {% csrf_token %}
  <input type="file" name="myfile">
  <input type="submit" value="Upload">
- </form>
-8
- {% if uploaded_file_url %}
- <p>Feito o upload para:
-<a href="{{ uploaded_file_url }}">
-{{ uploaded_file_url }}
-</a>
+</form>
+
+{% if uploaded_file_url %}
+<p>Feito o upload para:
+ <a href="{{ uploaded_file_url }}">
+  {{ uploaded_file_url }}
+ </a>
 </p>
- {% endif %}
- <p>
-<a href="{% url 'votacao:index' %}”>
-Voltar ao início
-</a>
+{% endif %}
+
+
+
+{% endblock %}
+
+
+{% block opcoes_e_controlos %}
+<p>
+ <input type=button value="Voltar" onClick="javascript:history.go(-1);">
 </p>
 
-
-
-
-</body>
-</html>
+{% endblock %}
