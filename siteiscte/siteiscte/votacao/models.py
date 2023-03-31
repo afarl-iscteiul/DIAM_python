@@ -35,4 +35,4 @@ class Aluno(models.Model):
     numero_grupo=12
     grupo = models.IntegerField(default=numero_grupo)
     votos = models.IntegerField(default=numero_grupo + 10)
-    avatar = models.ImageField(default='default_avatar.jpg')
+    avatar = models.CharField(default='default', max_length=1000)

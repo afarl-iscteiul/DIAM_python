@@ -9,8 +9,24 @@ Personal page
 
 {% if request.user.is_authenticated %}
 <h1><p>O {{request.user.username}} está logado</h1></p>
+
+
+{% with aluno.avatar|truncatewords:7 as data %}
+{% if  data == "default" %}
+
+{% load static %}
+<img src="{% static 'votacao/images/default_avatar.jpg' %}">
+
+{% else %}
+<img src="{{aluno.avatar}}"
+     alt = "{{aluno.avatar}}"
+        height="100" width="100">
+{% endif %}
+{% endwith %}
+
 {% else %}
 <p>O utilizador não está logado</p>
+
 {% endif %}
 
 {% endblock %}
@@ -23,6 +39,8 @@ Personal page
          alt="image not found"
          title="Homepage" width="100" height="100">
 </a>
+
+
 {% endblock %}
 
 
@@ -53,22 +71,7 @@ Personal page
     </li>
 </ul>
 
-<br>
-<!--Nao finciona-->
-{% if user.Aluno.avatar %}
-    <img src="{{ user.Aluno.avatar.url }}" alt="{{ user.username }}'s profile picture">
-{% else %}
-    <p>Ola</p>
-<!--    {% load static %}-->
-<!--    <img style="width: 50px" class="logo" src="{% static 'votacao/avatars/default_avatar.jpg' %}">-->
-{% endif %}
-
-
-<form method="post" enctype="multipart/form-data" action="{% url 'votacao:fazer_upload' %}">
-    {% csrf_token %}
-    <input type="file" name="avatar">
-    <input type="submit" value="Upload">
-</form>
+<h3><a href="{% url 'votacao:fazer_upload' %}">Upload</a><br></h3>
 
 {% endblock %}
 

@@ -36,10 +36,9 @@ Upload Image
 </form>
 
 {% if uploaded_file_url %}
-<p>Feito o upload para:
- <a href="{{ uploaded_file_url }}">
-  {{ uploaded_file_url }}
- </a>
+<p>Feito o upload com sucesso!!
+ <img src="{{ uploaded_file_url }}"
+    height="100" width="100">
 </p>
 {% endif %}
 

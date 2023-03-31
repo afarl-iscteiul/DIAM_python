@@ -201,14 +201,19 @@ def paginapessoal(request):
 
 
 def fazer_upload(request):
-    if request.method == 'POST' and request.FILES['avatar']:
-        myavatar = request.FILES['avatar']
+    if request.method == 'POST' and request.FILES['myfile']:
+        myfile = request.FILES['myfile']
+
+
         fs = FileSystemStorage()
-        filename = fs.save(myavatar.name, myavatar)
+        filename = fs.save(myfile.name, myfile)
         uploaded_file_url = fs.url(filename)
+
+
+
         #update user image
         aluno = Aluno.objects.get(user=request.user.id)
-        aluno.avatar = myavatar
+        aluno.avatar = uploaded_file_url
         aluno.save()
 
         return render(request, 'votacao/fazer_upload.html', {'uploaded_file_url': uploaded_file_url})
