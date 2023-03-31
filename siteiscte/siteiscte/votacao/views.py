@@ -71,6 +71,7 @@ def voto(request, questao_id):
 ### -------------------- ### -------------------- ### -------------------- ### -------------------- ### -------------
 
 @login_required(login_url='/votacao/')
+@permission_required('auth.is_superuser', login_url='/votacao/')
 def criarquestao(request):
     if request.method == 'POST':
         try:
@@ -88,6 +89,7 @@ def criarquestao(request):
 
 
 @login_required(login_url='/votacao/')
+@permission_required('auth.is_superuser', login_url='/votacao/')
 def eliminarquestao(request):
     questoes = Questao.objects.all()
     if request.method == 'POST':
@@ -108,6 +110,7 @@ def eliminarquestao(request):
 ### -------------------- ### -------------------- ### -------------------- ### -------------------- ### -------------
 
 @login_required(login_url='/votacao/')
+@permission_required('auth.is_superuser')
 def criaropcao(request, questao_id):
     questao = get_object_or_404(Questao, pk=questao_id)
 
@@ -189,6 +192,7 @@ def logoutview(request):
     logout(request)
     return HttpResponseRedirect(reverse('votacao:autenticar'))
 
+### -------------------- ### -------------------- ### -------------------- ### -------------------- ### -------------
 
 @login_required(login_url='/votacao/')
 def paginapessoal(request):
@@ -199,19 +203,16 @@ def paginapessoal(request):
     }
     return render(request, 'votacao/paginapessoal.html', context)
 
-
+@login_required(login_url='/votacao/')
 def fazer_upload(request):
     if request.method == 'POST' and request.FILES['myfile']:
         myfile = request.FILES['myfile']
-
 
         fs = FileSystemStorage()
         filename = fs.save(myfile.name, myfile)
         uploaded_file_url = fs.url(filename)
 
-
-
-        #update user image
+        # update user image
         aluno = Aluno.objects.get(user=request.user.id)
         aluno.avatar = uploaded_file_url
         aluno.save()
