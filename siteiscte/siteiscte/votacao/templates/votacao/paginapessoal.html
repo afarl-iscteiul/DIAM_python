@@ -11,7 +11,7 @@ Personal page
 {% endblock %}
 
 {% block navegacao %}
-     <a href="{% url 'votacao:index' %}">Home</a>
+<a href="{% url 'votacao:index' %}">Home</a>
 {% endblock %}
 
 
@@ -19,11 +19,17 @@ Personal page
 <div>
     <ul>
         <h1> Dados Pessoais </h1>
-        <li>Username: {{ user.username }}</li>
-        <li>Email: {{ user.email }}</li>
-        <li>Data de registo: {{ user.date_joined }}</li>
+        <li> <b>Nome</b>: {{ user.username }}</li>
+        <li> <b>E-mail</b>: {{ user.email }}</li>
+        <li> <b>Data de registo</b>: {{ user.date_joined }}</li>
+
         <h1> Dados Aluno </h1>
-        <li>Curso: {{ aluno.curso }}</li>
+        <li> <b>Curso</b>: {{ aluno.curso }}</li>
+        {% if not request.user.is_superuser %}
+        <li> <b>Número votos a que tem direito</b>: {{ aluno.grupo|add:10  }} </li>
+        <li> <b>Número de votos por usar</b>: {{ aluno.votos }}</li>
+        {% endif%}
+
     </ul>
 </div>
 

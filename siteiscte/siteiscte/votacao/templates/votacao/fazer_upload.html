@@ -16,11 +16,15 @@ Upload Image
 
 {% block conteudo %}
 
-{% if user.userprofile.profile_picture %}
-    <img src="{{ user.userprofile.profile_picture.url }}" alt="{{ user.username }}'s profile picture">
+<div class="container">
+{% if uploaded_file_url %}
+    <p>  Feito o upload com sucesso!! </p>
 {% else %}
     <p>No profile picture uploaded.</p>
 {% endif %}
+
+</div>
+
 
 {% load static %}
 <form method="post" enctype="multipart/form-data"
@@ -29,15 +33,6 @@ Upload Image
  <input type="file" name="myfile">
  <input type="submit" value="Upload">
 </form>
-
-{% if uploaded_file_url %}
-<p>Feito o upload com sucesso!!
- <img src="{{ uploaded_file_url }}"
-    height="100" width="100">
-</p>
-{% endif %}
-
-
 
 {% endblock %}
 

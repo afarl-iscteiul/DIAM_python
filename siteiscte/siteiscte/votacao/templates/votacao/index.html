@@ -12,40 +12,46 @@
     <a href="https://www.iscte-iul.pt/">{% load static %}
         <img class="logo" src="{% static 'votacao/images/iscte.gif' %}" alt="image not found" title="https://www.iscte-iul.pt/">
     </a>
-    {% if user.is_authenticated %}
-        <div class="foto">
-            {% with aluno.avatar|truncatewords:7 as data %}
-                {% if  data == "default" %}
-                    {% load static %}
-                    <img src="{% static 'votacao/images/default_avatar.jpg' %}">
-                    {% elif request.path == "/votacao/" or request.path == "/votacao/registo/"%}
-                        {% load static %}
-                        <img src="{% static 'votacao/images/default_avatar.jpg' %}">
-                    {% elif request.user.is_superuser %}
-                        {% load static %}
-                        <img src="{% static 'votacao/images/default_avatar.jpg' %}">
-                {% else %}
-                    <img src="{{aluno.avatar}}" alt = "{{aluno.avatar}}" height="100" width="100">
-                {% endif %}
-            {% endwith %}
-        </div>
-     {% endif %}
 
-     {% if request.user.is_authenticated %}
-        <div>
-            <h1>Bom dia {{request.user.username}}
-                    {% if not request.user.is_superuser %}
-                        já fez {{resultado}} votos. Os votos são limitados!
-                    {% endif %}
-            </h1>
-        </div>
+    <div class="container">
+            {% if user.is_authenticated %}
+        <h1>Bom dia {{request.user.username}},
+            {% if not request.user.is_superuser %}
+            {% if resultado == 1 %}
+            já fez {{resultado}} voto. Os votos são limitados!
+            {% elif resultado == 0 %}
+            ainda não fez nenhum voto. Os votos são limitados!
+            {% else %}
+            já fez {{resultado}} votos. Os votos são limitados!
+            {% endif %}
+            {% endif %}
+        </h1>
+
+            {% with aluno.avatar|truncatewords:7 as data %}
+            {% if  data == "default" %}
+            {% load static %}
+            <img src="{% static 'votacao/images/default_avatar.jpg' %}">
+            {% elif request.path == "/votacao/" or request.path == "/votacao/registo/"%}
+            {% load static %}
+            <img src="{% static 'votacao/images/default_avatar.jpg' %}">
+            {% elif request.user.is_superuser %}
+            {% load static %}
+            <img src="{% static 'votacao/images/default_avatar.jpg' %}">
+            {% else %}
+            <img src="{{aluno.avatar}}" alt = "{{aluno.avatar}}" height="100" width="100">
+            {% endif %}
+            {% endwith %}
+    </div>
+
+
     {% else %}
-        <div>
-            <h1>
-                O utilizador não está logado
-            </h1>
-        </div>
+    <div>
+        <h1>
+            O utilizador não está logado
+        </h1>
+    </div>
     {% endif %}
+
     {% block banner %}
     {% endblock %}
 </header>
@@ -60,7 +66,7 @@
         <a style="float:right; background-color:cadetblue" href="{% url 'votacao:logout' %}"> Logout</a>
         {% endif %}
 
-        {% if request.path != "/votacao/main/" %}
+        {% if request.path != "/votacao/main/" and request.path != "/votacao/" %}
         <p>
             <input type=button value="Voltar" onClick="javascript:history.go(-1);">
         </p>
@@ -73,17 +79,17 @@
 <section>
     <h1> Questões já criadas </h1>
     {% if latest_question_list %}
-        <ul>
-            {% for questao in latest_question_list %}
-            <p>
-            <li>
-                <a href="{% url 'votacao:detalhe' questao.id %}">{{ questao.questao_texto }}</a>
-            </li>
-             </p>
-            {% endfor %}
-        </ul>
+    <ul>
+        {% for questao in latest_question_list %}
+        <p>
+        <li>
+            <a href="{% url 'votacao:detalhe' questao.id %}">{{ questao.questao_texto }}</a>
+        </li>
+        </p>
+        {% endfor %}
+    </ul>
     {% else %}
-        <p>Nao há questoes disponiveis.</p>
+    <p>Nao há questoes disponiveis.</p>
     {% endif %}
 </section>
 {% endblock %}

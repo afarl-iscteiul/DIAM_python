@@ -223,6 +223,15 @@ def paginapessoal(request):
 
 @login_required(login_url='/votacao/')
 def fazer_upload(request):
+
+    aluno = Aluno.objects.get(user_id=request.user.id)
+    resultado = aluno.grupo + 10 - aluno.votos
+
+    context = {
+        'aluno': aluno,
+        "resultado": resultado}
+
+
     if request.method == 'POST' and request.FILES['myfile']:
         myfile = request.FILES['myfile']
 
@@ -235,5 +244,11 @@ def fazer_upload(request):
         aluno.avatar = uploaded_file_url
         aluno.save()
 
-        return render(request, 'votacao/fazer_upload.html', {'uploaded_file_url': uploaded_file_url})
-    return render(request, 'votacao/fazer_upload.html')
+        context = {
+            'aluno': aluno,
+            "resultado": resultado,
+            "uploaded_file_url": uploaded_file_url
+        }
+
+        return render(request, 'votacao/fazer_upload.html', context)
+    return render(request, 'votacao/fazer_upload.html', context)
