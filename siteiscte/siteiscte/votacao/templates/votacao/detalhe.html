@@ -9,7 +9,7 @@ Detalhe questão {{questao.id}}
 {% endblock %}
 
 {% block navegacao %}
-     <a href="{% url 'votacao:index' %}">Home</a>
+<a href="{% url 'votacao:index' %}">Home</a>
 {% endblock %}
 
 
@@ -27,29 +27,34 @@ Detalhe questão {{questao.id}}
     <input type="radio" name="opcao"
            id="opcao{{ forloop.counter }}"
            value="{{ opcao.id }}" />
+
     <label for="opcao{{ forloop.counter }}">
         {{ opcao.opcao_texto }}
     </label>
-    <br>
+    <p>
     {% endfor %}
+    </p>
 
     <br>
-
+    {% if not user.is_superuser %}
     <input type="submit" value="Voto" />
+    {% endif %}
 
 </form>
 {% endblock %}
 
-
+<br>
 {% block opcoes_e_controlos %}
 {% if user.is_superuser %}
-<div>
-    <a href="{% url 'votacao:criaropcao' questao.id%}"> Criar opção</a>
-    <br>
-    <a href="{% url 'votacao:eliminaropcao' questao.id%}"> Apagar opção</a>
-</div>
-{% endif %}
-<br/>
 
+        <a class="a_button" href="{% url 'votacao:criaropcao' questao.id %}">
+            Criar Opção!
+        </a>
+<br>
+        <a class="a_button" href="{% url 'votacao:eliminaropcao' questao.id %}">
+            Apagar Opção!
+        </a>
+
+{% endif %}
 
 {% endblock %}

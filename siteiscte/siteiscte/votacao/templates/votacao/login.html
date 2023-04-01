@@ -6,28 +6,13 @@ Login
 
 
 {% block banner %}
-<style>
-    form {
-        margin: 0 auto;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    }
-    .erro{
-        color:red;
-    }
-</style>
-{% endblock %}
-
-{% block navegacao %}
 
 {% endblock %}
 
 
 {% block conteudo %}
 <div>
-<form align="center" action="{% url 'votacao:autenticar' %}" method="post">
+<form action="{% url 'votacao:autenticar' %}" method="post">
 
     {% csrf_token %}
     {% if error_message %}

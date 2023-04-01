@@ -3,8 +3,8 @@
 html{
     background-color:lightblue;
     text-align:center;
-
 }
+
 .logo{
     width: 60%;
     display: block;
@@ -86,12 +86,10 @@ footer {
 
 
 h1{
-
     font-size: 40px;
 }
 
 label{
-    /*font-size: 120%;*/
     display: table-cell;
 }
 
@@ -99,10 +97,6 @@ p {
     display: table-row
 }
 
-ol{
-    display: inline-block;
-    text-align: left;
-}
 ul{
     text-align: center;
 }
@@ -111,28 +105,28 @@ li{
     text-align: center;
 }
 
+.erro{
+    color:red;
+}
 
 form{
     font-size:20px;
     display: table;
     margin: 0 auto;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    align-content: center;
+    alignment: center;
+
 }
 
 input,  button, select {
     border-radius:10px;
     aligment:center;
-    display: table-cell;
     width: 100%;
     padding: 12px 20px;
     margin: 8px;
     box-sizing: border-box;
     font-weight: bold;
     font-size: 15px;
+       display: inline-block;
 }
 
 table{
@@ -153,7 +147,6 @@ a:link, a:visited {
     color: black;
     padding: 14px 25px;
     text-align: center;
-    text-decoration: underline;
     display: inline-block;
 }
 
@@ -161,20 +154,21 @@ a:hover, a:active {
     background-color:  CornflowerBlue;
 }
 
+.a_button{
+    border-radius:10px;
+    aligment:center;
+    display: table-cell;
+    width: auto;
+    padding: 12px 20px;
+    margin: 8px;
+    box-sizing: border-box;
+    font-weight: bold;
+    font-size: 15px;
+    font-color: black;
 
-
-.chooser{
-    width : 50%
 }
 
-figure {
-<!--float:right;-->
-    background-color: ivory;
-    color: darkslateblue;
-    border-radius: 1px;
-    text-align: center;
-    padding: 1px;
-    font-family: arial, sans-serif;
-    box-shadow: 10px 10px 8px #888888;
-}
+.foto{
+    margin-left: 10px;
 
+}

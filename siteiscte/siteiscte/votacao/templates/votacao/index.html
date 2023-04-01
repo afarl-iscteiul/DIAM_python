@@ -15,12 +15,44 @@
         <img class="logo" src="{% static 'votacao/images/iscte.gif' %}" alt="image not found" title="https://www.iscte-iul.pt/">
     </a>
 
-    {% block banner %}
-    {% if request.user.is_authenticated %}
+    <div class="foto">
+
+        {% with aluno.avatar|truncatewords:7 as data %}
+        {% if  data == "default" %}
+
+        {% load static %}
+        <img src="{% static 'votacao/images/default_avatar.jpg' %}">
+
+        {% elif request.path == "/votacao/" or request.path == "/votacao/registo/"%}
+
+        {% load static %}
+        <img src="{% static 'votacao/images/default_avatar.jpg' %}">
+
+        {% elif request.user.is_superuser %}
+
+        {% load static %}
+        <img src="{% static 'votacao/images/default_avatar.jpg' %}">
+
+        {% else %}
+
+        <img src="{{aluno.avatar}}"
+             alt = "{{aluno.avatar}}"
+             height="100" width="100">
+
+        {% endif %}
+        {% endwith %}
+
+
+    </div>
+
     <div>
+        {% if request.user.is_authenticated %}
+
         <h1>Bom dia {{request.user.username}}
             {% if not request.user.is_superuser %}
             já fez {{resultado}} votos. Os votos são limitados!
+
+
             {% endif %}
         </h1>
     </div>
@@ -29,7 +61,11 @@
         O utilizador não está logado
     </h1>
     {% endif %}
+    {% block banner %}
     {% endblock %}
+
+
+
 </header>
 
 <body>
@@ -87,9 +123,8 @@
 {% if user.is_superuser %}
 
 <div>
-    <h3><a href="{% url 'votacao:criarquestao' %}">Criar Questão</a></h3>
-    <br>
-    <h3><a href="{% url 'votacao:eliminarquestao' %}">Eliminar Questão</a></h3>
+    <h3><a class="a_button" href="{% url 'votacao:criarquestao' %}">Criar Questão</a></h3>
+    <h3><a class="a_button" href="{% url 'votacao:eliminarquestao' %}">Eliminar Questão</a></h3>
 
 </div>
 {% endif %}

@@ -38,14 +38,30 @@ def index(request):
 @login_required(login_url='/votacao/')
 def detalhe(request, questao_id):
     questao = get_object_or_404(Questao, pk=questao_id)
-    return render(request, 'votacao/detalhe.html', {'questao': questao})
+    aluno = Aluno.objects.get(user_id=request.user.id)
+    resultado = aluno.grupo + 10 - aluno.votos
+
+    context = {
+        'aluno': aluno,
+        "resultado": resultado,
+        "questao": questao}
+
+    return render(request, 'votacao/detalhe.html', context)
 
 
 ### -------------------- ### -------------------- ### -------------------- ### -------------------- ### -------------
 @login_required(login_url='/votacao/')
 def resultados(request, questao_id):
     questao = get_object_or_404(Questao, pk=questao_id)
-    return render(request, 'votacao/resultados.html', {'questao': questao})
+    aluno = Aluno.objects.get(user_id=request.user.id)
+    resultado = aluno.grupo + 10 - aluno.votos
+
+    context = {
+        'aluno': aluno,
+        "resultado": resultado,
+        "questao": questao}
+
+    return render(request, 'votacao/resultados.html', context)
 
 
 @login_required(login_url='/votacao/')
@@ -197,10 +213,12 @@ def logoutview(request):
 @login_required(login_url='/votacao/')
 def paginapessoal(request):
     aluno = Aluno.objects.get(user_id=request.user.id)
+    resultado = aluno.grupo + 10 - aluno.votos
 
     context = {
-        'aluno': aluno
-    }
+        'aluno': aluno,
+        "resultado": resultado}
+
     return render(request, 'votacao/paginapessoal.html', context)
 
 @login_required(login_url='/votacao/')

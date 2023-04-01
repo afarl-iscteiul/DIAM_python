@@ -7,27 +7,6 @@ Personal page
 
 {% block banner %}
 
-{% if request.user.is_authenticated %}
-<h1><p>O {{request.user.username}} está logado</h1></p>
-
-
-{% with aluno.avatar|truncatewords:7 as data %}
-{% if  data == "default" %}
-
-{% load static %}
-<img src="{% static 'votacao/images/default_avatar.jpg' %}">
-
-{% else %}
-<img src="{{aluno.avatar}}"
-     alt = "{{aluno.avatar}}"
-        height="100" width="100">
-{% endif %}
-{% endwith %}
-
-{% else %}
-<p>O utilizador não está logado</p>
-
-{% endif %}
 
 {% endblock %}
 
