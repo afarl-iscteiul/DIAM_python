@@ -218,12 +218,12 @@ def paginapessoal(request):
     context = {
         'aluno': aluno,
         "resultado": resultado}
-
+    print(settings.BASE_DIR)
+    print(settings.MEDIA_ROOT)
     return render(request, 'votacao/paginapessoal.html', context)
 
 @login_required(login_url='/votacao/')
 def fazer_upload(request):
-
     aluno = Aluno.objects.get(user_id=request.user.id)
     resultado = aluno.grupo + 10 - aluno.votos
 

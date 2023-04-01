@@ -10,11 +10,12 @@
 
 <header>
     <a href="https://www.iscte-iul.pt/">{% load static %}
-        <img class="logo" src="{% static 'votacao/images/iscte.gif' %}" alt="image not found" title="https://www.iscte-iul.pt/">
+        <img class="logo" src="{% static 'votacao/images/iscte.gif' %}" alt="image not found"
+             title="https://www.iscte-iul.pt/">
     </a>
 
     <div class="container">
-            {% if user.is_authenticated %}
+        {% if user.is_authenticated %}
         <h1>Bom dia {{request.user.username}},
             {% if not request.user.is_superuser %}
             {% if resultado == 1 %}
@@ -26,21 +27,15 @@
             {% endif %}
             {% endif %}
         </h1>
-
+        {% if not request.user.is_superuser %}
             {% with aluno.avatar|truncatewords:7 as data %}
-            {% if  data == "default" %}
-            {% load static %}
-            <img src="{% static 'votacao/images/default_avatar.jpg' %}">
-            {% elif request.path == "/votacao/" or request.path == "/votacao/registo/"%}
-            {% load static %}
-            <img src="{% static 'votacao/images/default_avatar.jpg' %}">
-            {% elif request.user.is_superuser %}
-            {% load static %}
-            <img src="{% static 'votacao/images/default_avatar.jpg' %}">
-            {% else %}
-            <img src="{{aluno.avatar}}" alt = "{{aluno.avatar}}" height="100" width="100">
-            {% endif %}
+                {% if data == "default" or request.path == "/votacao/" or request.path == "/votacao/registo/"%}
+                    {% load static %} <img src="{% static 'votacao/images/default_avatar.jpg' %}">
+                {% else %}
+                    <img src="{{aluno.avatar}}" alt="{{aluno.avatar}}" height="100" width="100">
+                {% endif %}
             {% endwith %}
+        {% endif %}
     </div>
 
 
@@ -62,7 +57,7 @@
         {% endblock %}
         {% if request.path != "/votacao/" and request.path != "/votacao/registo/" %}
         <a href="{% url 'votacao:paginapessoal' %}"> Página Pessoal</a>
-
+        <a href="{% url 'votacao:index' %}">Questões</a>
         <a style="float:right; background-color:cadetblue" href="{% url 'votacao:logout' %}"> Logout</a>
         {% endif %}
 

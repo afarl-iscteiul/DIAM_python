@@ -16,14 +16,13 @@ Create user
 <h1> CREATE USER </h1>
 
 <form action="{% url 'votacao:registo' %}" method="post">
-
     {% csrf_token %}
     <p>
         <label for="user">Nome:</label>
         <input type= "text" id="user" name= "user">
     </p>
     <p>
-        <label for="mail">email:</label>
+        <label for="mail">E-mail:</label>
         <input type= "text" id="mail" name= "mail">
     </p>
     <p>
@@ -44,9 +43,7 @@ Create user
         <button style="transform: translate(+50%)" type="submit"> Registar </button>
     </p>
 </form>
-
 {% endblock %}
-
 
 {% block opcoes_e_controlos %}
 

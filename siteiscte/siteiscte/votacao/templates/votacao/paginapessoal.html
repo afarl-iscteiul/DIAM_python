@@ -32,9 +32,9 @@ Personal page
 
     </ul>
 </div>
-
+{% if not request.user.is_superuser %}
 <h3><a href="{% url 'votacao:fazer_upload' %}">Upload Foto de Perfil</a><br></h3>
-
+{% endif%}
 {% endblock %}
 
 

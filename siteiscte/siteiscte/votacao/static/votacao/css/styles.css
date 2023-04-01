@@ -15,9 +15,6 @@ header {
     display: block;
 }
 
-/*header:hover{*/
-/*    background-color:  CornflowerBlue;*/
-/*}*/
 
 body{
     background-color:lightblue;
@@ -41,6 +38,7 @@ h1{
 
 label{
     display: table-cell;
+    text-align: left;
 }
 
 p {
@@ -49,7 +47,7 @@ p {
 
 ul{
     display: inline-block;
-    text-align: center;
+    text-align: left;
 }
 
 li{
@@ -68,9 +66,9 @@ form{
     alignment: center;
 }
 
-input,  button, select {
+input, button, select {
     border-radius:10px;
-    aligment:center;
+    aligment:left;
     width: 100%;
     padding: 12px 20px;
     margin: 8px;
@@ -82,7 +80,7 @@ input,  button, select {
 
 table{
     border: 1px solid;
-    table-aligment:center;
+    table-aligment:left;
     margin-right:auto;
     margin-left:auto;
 }
@@ -90,7 +88,7 @@ table{
 th, td {
     border: 1px solid;
     padding: 10px;
-    aligment: center;
+    aligment: left;
 }
 
 a:link, a:visited {
