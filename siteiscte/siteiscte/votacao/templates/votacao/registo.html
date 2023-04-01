@@ -4,39 +4,10 @@
 Create user
 {% endblock %}
 
-
 {% block banner %}
-<style>
-        form {
-            display: table;
-            margin: 0 auto;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-
-        p {
-            display: table-row
-        }
-
-        label {
-            display: table-cell;
-        }
-
-        input {
-            display: table-cell;
-        }
-
-        button {
-            alignment: center;
-        }
-    </style>
-
 {% endblock %}
 
 {% block navegacao %}
-
 {% endblock %}
 
 
@@ -44,8 +15,7 @@ Create user
 
 <h1> CREATE USER </h1>
 
-<form action="{% url 'votacao:registo' %}"
-      method="post">
+<form action="{% url 'votacao:registo' %}" method="post">
 
     {% csrf_token %}
     <p>
@@ -71,7 +41,7 @@ Create user
         </select>
     </p>
     <p>
-        <button type="submit"> Registar </button>
+        <button style="transform: translate(+50%)" type="submit"> Registar </button>
     </p>
 </form>
 
@@ -79,8 +49,6 @@ Create user
 
 
 {% block opcoes_e_controlos %}
-<p>
-  <input type=button value="Voltar" onClick="javascript:history.go(-1);">
-</p>
+
 
 {% endblock %}

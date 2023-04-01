@@ -9,13 +9,7 @@ Detalhe questão {{questao.id}}
 {% endblock %}
 
 {% block navegacao %}
-
-<a href= "{% url 'votacao:index'%}">
-  {% load static %}
-    <img src="{% static 'votacao/images/home.jpg' %}"
-             alt="image not found"
-             title="Homepage" width ="100" height = "100">
-</a>
+     <a href="{% url 'votacao:index' %}">Home</a>
 {% endblock %}
 
 
@@ -24,7 +18,6 @@ Detalhe questão {{questao.id}}
 {% if error_message %}
 <p><strong>{{ error_message }}</strong></p>
 {% endif %}
-
 
 
 <form action="{% url 'votacao:voto' questao.id %}"
@@ -44,7 +37,6 @@ Detalhe questão {{questao.id}}
 
     <input type="submit" value="Voto" />
 
-
 </form>
 {% endblock %}
 
@@ -59,8 +51,5 @@ Detalhe questão {{questao.id}}
 {% endif %}
 <br/>
 
-<p>
-  <input type=button value="Voltar" onClick="javascript:history.go(-1);">
-</p>
 
 {% endblock %}

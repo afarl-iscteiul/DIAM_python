@@ -9,12 +9,7 @@ Results
 {% endblock %}
 
 {% block navegacao %}
- <a href= "{% url 'votacao:index'%}">
-
-  {% load static %}
-    <img src="{% static 'votacao/images/home.jpg' %}"
-       alt="image not found"
-       title="Homepage" width ="100" height = "100"> </a>
+     <a href="{% url 'votacao:index' %}">Home</a>
 {% endblock %}
 
 
@@ -37,8 +32,6 @@ Results
 
 
 {% block opcoes_e_controlos %}
-<p>
-  <input type=button value="Voltar" onClick="javascript:history.go(-1);">
-</p>
+
 
 {% endblock %}

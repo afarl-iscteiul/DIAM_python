@@ -77,17 +77,13 @@ footer {
     text-align: center;
     color:white;
     width: 100%;
-    position:absolute;
+    /*position:absolute;*/
     bottom:0%;
     font-size: 20px;
 }
 
 /* ELEMENTS */
 
-.logout{
-
-    text-align: right;
-}
 
 h1{
 
@@ -95,7 +91,7 @@ h1{
 }
 
 label{
-    font-size: 120%;
+    /*font-size: 120%;*/
     display: table-cell;
 }
 
@@ -108,36 +104,35 @@ ol{
     text-align: left;
 }
 ul{
-    text-align: left;
+    text-align: center;
 }
 
 li{
-    text-align: left;
-}
-
-
-radio{
-    right: 10px;
-    position: relative;
-}
-
-legend{
-    font-size:25px;
+    text-align: center;
 }
 
 
 form{
     font-size:20px;
     display: table;
+    margin: 0 auto;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    align-content: center;
 }
 
-input {
+input,  button, select {
     border-radius:10px;
-    margin-bottom:5px;
-    margin-right:auto;
-    margin-left:auto;
     aligment:center;
     display: table-cell;
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px;
+    box-sizing: border-box;
+    font-weight: bold;
+    font-size: 15px;
 }
 
 table{
@@ -166,21 +161,7 @@ a:hover, a:active {
     background-color:  CornflowerBlue;
 }
 
-input{
-    margin-right: 40px;
-    margin-bottom: 10px;
-}
 
-input[type=text] {
-    width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    box-sizing: border-box;
-}
-
-input[type=submit], input[type=reset]{
-    margin-right: 10px;
-}
 
 .chooser{
     width : 50%
@@ -197,6 +178,3 @@ figure {
     box-shadow: 10px 10px 8px #888888;
 }
 
-button{
-    font-size: 25px;
-}

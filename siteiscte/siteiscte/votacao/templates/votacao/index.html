@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'votacao/css/styles.css' %}">
+
     <title>{% block titulo %} Index {% endblock %} </title>
 </head>
 
@@ -33,19 +34,24 @@
 
 <body>
 <nav>
-    {% block navegacao %}
 
     <div>
-        <a href="">Home</a>
-        <!--    {% if not user.is_superuser %}-->
-        <a href='personal/'> Página Pessoal</a>
-        <!--    {% endif %}-->
-        <!--</div>-->
-        <!--    <div class="logout">-->
-        <a class="logout" href="{% url 'votacao:logout' %}"> Logout</a>
+        {% block navegacao %}
+        {% endblock %}
+
+        {% if request.path != "/votacao/" and request.path != "/votacao/registo/" %}
+        <a href="{% url 'votacao:paginapessoal' %}"> Página Pessoal</a>
+
+        <a style="float:right; background-color:cadetblue" href="{% url 'votacao:logout' %}"> Logout</a>
+        {% endif %}
+
+        {% if request.path != "/votacao/main/" %}
+        <p>
+            <input type=button value="Voltar" onClick="javascript:history.go(-1);">
+        </p>
+        {% endif %}
     </div>
 
-    {% endblock %}
 </nav>
 
 
@@ -53,9 +59,9 @@
 
 </aside>
 
-
+{% block conteudo %}
 <section>
-    {% block conteudo %}
+
     <h1> Questões já criadas </h1>
     {% if latest_question_list %}
     <ul>
@@ -72,15 +78,17 @@
     <p>Nao há questoes disponiveis.</p>
     {% endif %}
 
-    {% endblock %}
-</section>
 
+</section>
+{% endblock %}
 
 {% block opcoes_e_controlos %}
-    {% if user.is_superuser %}
+
+{% if user.is_superuser %}
 
 <div>
-    <h3><a href="{% url 'votacao:criarquestao' %}">Criar Questão</a><br></h3>
+    <h3><a href="{% url 'votacao:criarquestao' %}">Criar Questão</a></h3>
+    <br>
     <h3><a href="{% url 'votacao:eliminarquestao' %}">Eliminar Questão</a></h3>
 
 </div>
