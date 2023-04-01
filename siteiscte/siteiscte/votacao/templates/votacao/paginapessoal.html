@@ -16,33 +16,18 @@ Personal page
 
 
 {% block conteudo %}
+<div>
+    <ul>
+        <h1> Dados Pessoais </h1>
+        <li>Username: {{ user.username }}</li>
+        <li>Email: {{ user.email }}</li>
+        <li>Data de registo: {{ user.date_joined }}</li>
+        <h1> Dados Aluno </h1>
+        <li>Curso: {{ aluno.curso }}</li>
+    </ul>
+</div>
 
-<h1> Dados Pessoais </h1>
-
-<ul>
-    <li>
-        Username: {{ user.username }}
-    </li>
-    <li>
-        Email: {{ user.email }}
-    </li>
-
-    <li>
-        Data de registo: {{ user.date_joined }}
-    </li>
-
-
-</ul>
-
-<h1> Dados Aluno </h1>
-
-<ul>
-    <li>
-        Curso: {{ aluno.curso }}
-    </li>
-</ul>
-
-<h3><a href="{% url 'votacao:fazer_upload' %}">Upload</a><br></h3>
+<h3><a href="{% url 'votacao:fazer_upload' %}">Upload Foto de Perfil</a><br></h3>
 
 {% endblock %}
 

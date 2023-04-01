@@ -9,72 +9,51 @@
 </head>
 
 <header>
-
-    <a href="https://www.iscte-iul.pt/">
-        {% load static %}
+    <a href="https://www.iscte-iul.pt/">{% load static %}
         <img class="logo" src="{% static 'votacao/images/iscte.gif' %}" alt="image not found" title="https://www.iscte-iul.pt/">
     </a>
+    {% if user.is_authenticated %}
+        <div class="foto">
+            {% with aluno.avatar|truncatewords:7 as data %}
+                {% if  data == "default" %}
+                    {% load static %}
+                    <img src="{% static 'votacao/images/default_avatar.jpg' %}">
+                    {% elif request.path == "/votacao/" or request.path == "/votacao/registo/"%}
+                        {% load static %}
+                        <img src="{% static 'votacao/images/default_avatar.jpg' %}">
+                    {% elif request.user.is_superuser %}
+                        {% load static %}
+                        <img src="{% static 'votacao/images/default_avatar.jpg' %}">
+                {% else %}
+                    <img src="{{aluno.avatar}}" alt = "{{aluno.avatar}}" height="100" width="100">
+                {% endif %}
+            {% endwith %}
+        </div>
+     {% endif %}
 
-    <div class="foto">
-
-        {% with aluno.avatar|truncatewords:7 as data %}
-        {% if  data == "default" %}
-
-        {% load static %}
-        <img src="{% static 'votacao/images/default_avatar.jpg' %}">
-
-        {% elif request.path == "/votacao/" or request.path == "/votacao/registo/"%}
-
-        {% load static %}
-        <img src="{% static 'votacao/images/default_avatar.jpg' %}">
-
-        {% elif request.user.is_superuser %}
-
-        {% load static %}
-        <img src="{% static 'votacao/images/default_avatar.jpg' %}">
-
-        {% else %}
-
-        <img src="{{aluno.avatar}}"
-             alt = "{{aluno.avatar}}"
-             height="100" width="100">
-
-        {% endif %}
-        {% endwith %}
-
-
-    </div>
-
-    <div>
-        {% if request.user.is_authenticated %}
-
-        <h1>Bom dia {{request.user.username}}
-            {% if not request.user.is_superuser %}
-            já fez {{resultado}} votos. Os votos são limitados!
-
-
-            {% endif %}
-        </h1>
-    </div>
+     {% if request.user.is_authenticated %}
+        <div>
+            <h1>Bom dia {{request.user.username}}
+                    {% if not request.user.is_superuser %}
+                        já fez {{resultado}} votos. Os votos são limitados!
+                    {% endif %}
+            </h1>
+        </div>
     {% else %}
-    <h1>
-        O utilizador não está logado
-    </h1>
+        <div>
+            <h1>
+                O utilizador não está logado
+            </h1>
+        </div>
     {% endif %}
     {% block banner %}
     {% endblock %}
-
-
-
 </header>
-
 <body>
 <nav>
-
     <div>
         {% block navegacao %}
         {% endblock %}
-
         {% if request.path != "/votacao/" and request.path != "/votacao/registo/" %}
         <a href="{% url 'votacao:paginapessoal' %}"> Página Pessoal</a>
 
@@ -87,34 +66,25 @@
         </p>
         {% endif %}
     </div>
-
 </nav>
 
 
-<aside>
-
-</aside>
-
 {% block conteudo %}
 <section>
-
     <h1> Questões já criadas </h1>
     {% if latest_question_list %}
-    <ul>
-        {% for questao in latest_question_list %}
-        <li>
-            <a href="{% url 'votacao:detalhe' questao.id %}">
-                {{ questao.questao_texto }}
-            </a>
-        </li>
-        {% endfor %}
-    </ul>
-
+        <ul>
+            {% for questao in latest_question_list %}
+            <p>
+            <li>
+                <a href="{% url 'votacao:detalhe' questao.id %}">{{ questao.questao_texto }}</a>
+            </li>
+             </p>
+            {% endfor %}
+        </ul>
     {% else %}
-    <p>Nao há questoes disponiveis.</p>
+        <p>Nao há questoes disponiveis.</p>
     {% endif %}
-
-
 </section>
 {% endblock %}
 
