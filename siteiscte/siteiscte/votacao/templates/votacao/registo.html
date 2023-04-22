@@ -20,15 +20,15 @@ Create user
     {% csrf_token %}
     <p>
         <label for="user">Nome:</label>
-        <input type="text" id="user" name="user">
+        <input type="text" id="user" name="user" required>
     </p>
     <p>
         <label for="mail">E-mail:</label>
-        <input type="text" id="mail" name="mail">
+        <input type="text" id="mail" name="mail" required>
     </p>
     <p>
         <label for="pass">Password:</label>
-        <input type="password" id="pass" name="pass">
+        <input type="password" id="pass" name="pass" required>
     </p>
     <p>
         <label for="curso">Curso:</label>
