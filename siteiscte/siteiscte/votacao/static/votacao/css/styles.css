@@ -59,6 +59,11 @@ li{
     color:red;
 }
 
+.hidden {
+  visibility: hidden;
+}
+
+
 form{
     font-size:20px;
     display: table;
