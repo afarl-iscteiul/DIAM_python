@@ -4,36 +4,11 @@
     <meta charset="UTF-8">
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'votacao/css/styles.css' %}">
+    <script src="{% static 'votacao/scripts/JavaScript.js' %}"></script>
 
     <title>{% block titulo %} Index {% endblock %} </title>
 
-    <script>
-        function hiddeProfilePic() {
-            var profilePic = document.getElementById("aluno.avatar");
-            profilePic.style.visibility = "hidden";
-        }
-
-        function showProfilePic() {
-            var profilePic = document.getElementById("aluno.avatar");
-            profilePic.style.visibility = "visible";
-        }
-
-        function toogleQuestions() {
-            var questions = document.getElementById("questoes");
-            var toggleButton = document.getElementById("toggleButton");
-
-            if (questions.style.visibility === "hidden") {
-                questions.style.visibility = "visible";
-                toggleButton.innerHTML = "Esconder lista de Questões";
-            } else {
-                questions.style.visibility = "hidden";
-                toggleButton.innerHTML = "Mostrar lista de Questões";
-            }
-        }
-    </script>
-
-
-</head>
+ </head>
 
 <header>
     <a href="https://www.iscte-iul.pt/">{% load static %}
@@ -46,7 +21,6 @@
         {% if user.is_authenticated %}
         <h1>Bom dia
             <span id="username" onclick="showProfilePic()">{{request.user.username}}</span>,
-
 
             {% if not request.user.is_superuser %}
             {% if resultado == 1 %}
@@ -61,11 +35,12 @@
         {% if not request.user.is_superuser %}
         {% with aluno.avatar|truncatewords:7 as data %}
         {% if data == "default" or request.path == "/votacao/" or request.path == "/votacao/registo/"%}
-        {% load static %} <img src="{% static 'votacao/images/default_avatar.jpg' %}">
+        {% load static %}
+        <img src="{% static 'votacao/images/default_avatar.jpg' %}">
         {% else %}
 
         <img id="aluno.avatar" src="{{aluno.avatar}}" alt="{{aluno.avatar}}" height="100" width="100"
-             style="visibility: visible;" ondblclick="hiddeProfilePic()">
+             style="visibility: visible;" ondblclick="hideProfilePic()">
 
         {% endif %}
         {% endwith %}

@@ -51,65 +51,6 @@ Create user
     </p>
 </form>
 
-<script>
-    let bannedWords = [];
-
-    // Fetch banned words from file
-    fetch('banned-words.txt')
-        .then(response => response.text())
-        .then(data => bannedWords = data.split('\n'))
-        .catch(error => console.error(error));
-
-
-    let commentValidated = false;
-
-    function validateComment() {
-        const comment = document.getElementById("comentario").value;
-        const validationStatus = document.getElementById("comment-validation-status");
-        //LISTA DE PALAVRAS BANIDAS
-        const bannedWords = ["abécula", "abecula", "abentesma", "achavascado", "alimária", "alimaria",
-            "andrajoso", "barregã", "barrega", "biltre", "cacóstomo", "cacostomo", "cuarra", "estólido", "estolido",
-            "estroso", "estultilóquio", "estultiloquio", "nefelibata", "néscio", "nescio", "pechenga", "sevandija",
-            "somítico", "somitico", "tatibitate", "xexé", "xexe", "cheché", "cheche", "xexelento"];
-
-
-        for (let i = 0; i < bannedWords.length; i++) {
-            if (comment.toLowerCase().includes(bannedWords[i])) {
-                validationStatus.innerHTML = "Comentário não aceite.";
-                document.getElementById("comentario").value = "";
-                commentValidated = false;
-                document.getElementById("registo-submit").disabled = true;
-                return;
-            }
-        }
-
-        validationStatus.innerHTML = "Comentário aceite.";
-        commentValidated = true;
-        document.getElementById("registo-submit").disabled = false;
-    }
-
-    // Add event listener to "comentario" input field
-    document.getElementById("comentario").addEventListener("input", function () {
-        // Reset validation status
-        const validationStatus = document.getElementById("comment-validation-status");
-        validationStatus.innerHTML = "";
-
-        // Disable submit button
-        document.getElementById("registo-submit").disabled = true;
-
-        // Reset commentValidated flag
-        commentValidated = false;
-    });
-
-    document.getElementById("registo-form").addEventListener("submit", function (event) {
-        if (!commentValidated) {
-            event.preventDefault();
-            alert("Por favor, valide o comentário antes de submeter o formulário.");
-        }
-    });
-</script>
-
-
 {% endblock %}
 
 {% block opcoes_e_controlos %}
