@@ -10,16 +10,25 @@
     <script>
         function hiddeProfilePic() {
             var profilePic = document.getElementById("aluno.avatar");
-            if (profilePic.style.visibility === "hidden") {
-                profilePic.style.visibility = "visible";
-            } else {
-                profilePic.style.visibility = "hidden";
-            }
+            profilePic.style.visibility = "hidden";
         }
 
         function showProfilePic() {
             var profilePic = document.getElementById("aluno.avatar");
             profilePic.style.visibility = "visible";
+        }
+
+        function toogleQuestions() {
+            var profilePic = document.getElementById("questoes");
+            var toggleButton = document.getElementById("toggleButton");
+
+            if (profilePic.style.visibility === "hidden") {
+                profilePic.style.visibility = "visible";
+                toggleButton.innerHTML = "Esconder lista de Questões";
+            } else {
+                profilePic.style.visibility = "hidden";
+                toggleButton.innerHTML = "Mostrar lista de Questões";
+            }
         }
     </script>
 
@@ -98,19 +107,23 @@
 {% block conteudo %}
 <section>
     <h1> Questões já criadas </h1>
-    {% if latest_question_list %}
-    <ul>
-        {% for questao in latest_question_list %}
-        <p>
-        <li>
-            <a href="{% url 'votacao:detalhe' questao.id %}">{{ questao.questao_texto }}</a>
-        </li>
-        </p>
-        {% endfor %}
-    </ul>
-    {% else %}
-    <p>Nao há questoes disponiveis.</p>
-    {% endif %}
+    <button id="toggleButton" onclick="toogleQuestions()">Mostrar lista de Questões</button>
+    <div id="questoes" style="visibility: hidden">
+        {% if latest_question_list %}
+        <ul>
+            {% for questao in latest_question_list %}
+            <p>
+            <li>
+                <a href="{% url 'votacao:detalhe' questao.id %}">{{ questao.questao_texto }}</a>
+            </li>
+            </p>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>Nao há questoes disponiveis.</p>
+        {% endif %}
+    </div>
+
 </section>
 {% endblock %}
 

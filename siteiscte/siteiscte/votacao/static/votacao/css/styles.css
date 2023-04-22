@@ -71,7 +71,20 @@ form{
     alignment: center;
 }
 
-input, button, select {
+button {
+    border-radius:10px;
+    aligment:left;
+    /*width: 100%;*/
+    padding: 12px 20px;
+    margin: 8px;
+    box-sizing: border-box;
+    font-weight: bold;
+    font-size: 15px;
+    display: inline-block;
+}
+
+input,
+select {
     border-radius:10px;
     aligment:left;
     width: 100%;
