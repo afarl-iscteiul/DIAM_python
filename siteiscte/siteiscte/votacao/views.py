@@ -187,6 +187,7 @@ def registo(request):
 
 
 def autenticar(request):
+    logout(request)
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']

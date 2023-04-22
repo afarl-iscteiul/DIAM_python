@@ -84,7 +84,8 @@ button {
 }
 
 input,
-select {
+select,
+textarea {
     border-radius:10px;
     aligment:left;
     width: 100%;
