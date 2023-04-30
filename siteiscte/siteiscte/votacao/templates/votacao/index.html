@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'votacao/css/styles.css' %}">
-    <script src="{% static 'votacao/scripts/JavaScript.js' %}"></script>
 
     <title>{% block titulo %} Index {% endblock %} </title>
 
- </head>
+</head>
 
 <header>
-    <a href="https://www.iscte-iul.pt/">{% load static %}
+    <a href="https://www.iscte-iul.pt/">
+        {% load static %}
         <img class="logo" src="{% static 'votacao/images/iscte.gif' %}" alt="image not found"
              title="https://www.iscte-iul.pt/">
     </a>
@@ -115,10 +115,11 @@
 {% endif %}
 
 {% endblock %}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+        {% load static %}
+<script type ="text/javascript" src ="{% static 'scripts/JavaScript.js' %}"></script>
+
+
 </body>
-
-<footer>
-
-</footer>
-
 </html>

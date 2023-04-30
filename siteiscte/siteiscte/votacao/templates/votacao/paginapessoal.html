@@ -14,30 +14,43 @@ Personal page
 <a href="{% url 'votacao:index' %}">Home</a>
 {% endblock %}
 
-
 {% block conteudo %}
-<div>
-    <ul>
-        <h1> Dados Pessoais </h1>
-        <li> <b>Nome</b>: {{ user.username }}</li>
-        <li> <b>E-mail</b>: {{ user.email }}</li>
-        <li> <b>Data de registo</b>: {{ user.date_joined }}</li>
 
-        <h1> Dados Aluno </h1>
-        <li> <b>Curso</b>: {{ aluno.curso }}</li>
-        {% if not request.user.is_superuser %}
-        <li> <b>Número votos a que tem direito</b>: {{ aluno.grupo|add:10  }} </li>
-        <li> <b>Número de votos por usar</b>: {{ aluno.votos }}</li>
-        {% endif%}
+    <div id="personal_info">
+        <img id="aluno.avatar" src="{{aluno.avatar}}" alt="{{aluno.avatar}}">
+    </div>
 
-    </ul>
-</div>
+    <div>
+        <ul>
+            <h1>Dados Pessoais</h1>
+            <li><b>Nome:</b> {{ user.username }}</li>
+            <li><b>E-mail:</b> {{ user.email }}</li>
+            <li><b>Data de registo:</b> {{ user.date_joined }}</li>
+            <h1>Dados Aluno</h1>
+            <li><b>Curso:</b> {{ aluno.curso }}</li>
+        </ul>
+    </div>
+
+    <br>
+     {% if not request.user.is_superuser %}
+    <button id="toggleVotos" onclick="toggleVotos()">Mostrar histórico de votos</button>
+    {% endif%}
+    <br>
+    <div id="votosHistory" style="visibility: hidden">
+         <ul>
+        <li><b>Número votos a que tem direito</b>: {{ aluno.grupo|add:10  }}</li>
+        <li><b>Número de votos por usar</b>: {{ aluno.votos }}</li>
+         </ul>
+
+    </div>
+
 {% if not request.user.is_superuser %}
 <h3><a href="{% url 'votacao:fazer_upload' %}">Upload Foto de Perfil</a><br></h3>
 {% endif%}
 {% endblock %}
 
-
 {% block opcoes_e_controlos %}
 
 {% endblock %}
+
+
